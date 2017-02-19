@@ -1,3 +1,4 @@
 # MiscScripts for AscEmu
 ## Content
- * No content
+ * simple_register (A simple account registration page)
+ 
