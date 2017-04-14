@@ -1,6 +1,7 @@
 <?php
 	ob_start();
 	include_once 'dbconfig.php';
+	include_once 'background.php';
 
 	$error = false;
 
@@ -96,18 +97,16 @@
 		}
 	}
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Simple Register</title>
-<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"  />
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-
 <div class="container">
 	<div id="login-form">
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
@@ -170,8 +169,6 @@
 		</form>
 	</div>
 </div>
-
 </body>
 </html>
-
 <?php ob_end_flush(); ?>
