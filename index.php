@@ -1,8 +1,10 @@
 <?php
 	ob_start();
 	include_once 'configs/authDatabase.php';
+    include_once 'core/accountDatabase.php';
 	include_once 'background.php';
 
+    $accDB = new AccountDB($conn);
 	$error = false;
     
     $name = "";
@@ -15,22 +17,14 @@
     
 	if (isset($_POST['btn-signup']))
 	{
-		$name = trim($_POST['name']);
-		$name = strip_tags($name);
-		$name = htmlspecialchars($name);
-		
-		$email = trim($_POST['email']);
-		$email = strip_tags($email);
-		$email = htmlspecialchars($email);
-		
-		$pass = trim($_POST['pass']);
-		$pass = strip_tags($pass);
-		$pass = htmlspecialchars($pass);
+		$name = $_POST['name'];
+		$email = $_POST['email'];
+		$pass = $_POST['pass'];
 		
 		if (empty($name))
 		{
 			$error = true;
-			$nameError = "Please enter your full name.";
+			$nameError = "Please enter an account name.";
 		}
 		else if (strlen($name) < 3)
 		{
@@ -44,9 +38,7 @@
 		}
 		else
 		{
-			$query = "SELECT acc_name FROM accounts WHERE acc_name='$name'";
-			$result = mysqli_query($conn, $query);
-			$count = mysqli_num_rows($result);
+			$count = $accDB->isNameAlreadyRegistered($name);
 			if($count!=0)
 			{
 				$error = true;
@@ -61,9 +53,7 @@
 		}
 		else
 		{
-			$query = "SELECT email FROM accounts WHERE email='$email'";
-			$result = mysqli_query($conn, $query);
-			$count = mysqli_num_rows($result);
+			$count = $accDB->isEMailAlreadyRegistered($email);
 			if($count!=0)
 			{
 				$error = true;
@@ -82,13 +72,9 @@
 			$passError = "Password must have atleast 6 characters.";
 		}
 
-		$password = hash('sha1', strtoupper($name . ':' . $pass));
-
 		if(!$error)
 		{
-			$query = "INSERT INTO accounts(acc_name, encrypted_password, banned, email, flags, banreason) VALUES('$name', '$password', '0', '$email', '24', '')";
-			$res = mysqli_query($conn, $query);
-				
+            $res = $accDB->createNewAccount($name, $pass, $email);
 			if ($res)
 			{
 				$errTyp = "success";
