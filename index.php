@@ -1,10 +1,18 @@
 <?php
 	ob_start();
-	include_once 'dbconfig.php';
+	include_once 'configs/authDatabase.php';
 	include_once 'background.php';
 
 	$error = false;
-
+    
+    $name = "";
+    $email = "";
+    $pass = "";
+    
+    $nameError = "";
+    $emailError = "";
+    $passError = "";
+    
 	if (isset($_POST['btn-signup']))
 	{
 		$name = trim($_POST['name']);
@@ -36,7 +44,7 @@
 		}
 		else
 		{
-			$query = "SELECT login FROM accounts WHERE login='$name'";
+			$query = "SELECT acc_name FROM accounts WHERE acc_name='$name'";
 			$result = mysqli_query($conn, $query);
 			$count = mysqli_num_rows($result);
 			if($count!=0)
@@ -78,7 +86,7 @@
 
 		if(!$error)
 		{
-			$query = "INSERT INTO accounts(login, encrypted_password, gm, banned, email, flags, banreason) VALUES('$name', '$password', '0', '0', '$email', '24', '')";
+			$query = "INSERT INTO accounts(acc_name, encrypted_password, banned, email, flags, banreason) VALUES('$name', '$password', '0', '$email', '24', '')";
 			$res = mysqli_query($conn, $query);
 				
 			if ($res)
@@ -133,7 +141,7 @@
 				<div class="form-group">
 					<div class="input-group">
 						<span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
-						<input type="text" name="name" class="form-control" placeholder="Enter Name" maxlength="50" value="<?php echo $name ?>" />
+						<input type="text" name="name" class="form-control" placeholder="Enter Name" maxlength="50" />
 					</div>
 					<span class="text-danger"><?php echo $nameError; ?></span>
 				</div>
@@ -141,7 +149,7 @@
 				<div class="form-group">
 					<div class="input-group">
 						<span class="input-group-addon"><span class="fa fa-envelope" aria-hidden="true"></span></span>
-						<input type="email" name="email" class="form-control" placeholder="Enter Your Email" maxlength="40" value="<?php echo $email ?>" />
+						<input type="email" name="email" class="form-control" placeholder="Enter Your Email" maxlength="40" />
 					</div>
 					<span class="text-danger"><?php echo $emailError; ?></span>
 				</div>
