@@ -1,10 +1,10 @@
 <?php
 	ob_start();
-	include_once 'configs/authDatabase.php';
-    include_once 'core/accountDatabase.php';
 	include_once 'background.php';
+    include_once 'include/database.inc.php';
+    include_once 'include/accountDB.inc.php';
 
-    $accDB = new AccountDB($conn);
+    $accDB = new AccountDB();
 	$error = false;
     
     $name = "";

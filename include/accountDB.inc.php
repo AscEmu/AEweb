@@ -1,12 +1,12 @@
 <?php
 
-class AccountDB
+class AccountDB extends Database
 {
     private $connection;
     
-    function __construct($conn)
+    function __construct()
     {
-        $this->connection = $conn;
+        $this->connection = $this->connectToAccountDB();
     }
     
     // class functions
@@ -45,5 +45,3 @@ class AccountDB
         return mysqli_query($this->connection, $query);
     }
 }
-
-?>
