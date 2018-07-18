@@ -27,6 +27,7 @@
         {
             $errLoginTyp = "success";
             echo "Signed in with name " .$userName. " and pw: " .$userPassword;
+            $_SESSION['userid'] = $accDB->getIdForAccountName($userName);
         }
         else
         {
@@ -84,6 +85,10 @@
 </head>
 <body>
 <div class="container">
+    <?php
+    if (!isset($_SESSION['userid']))
+    {
+    ?>
 	<div id="login-form">
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
 			<div class="col-md-6">
@@ -192,6 +197,15 @@
             </div>
 		</form>
 	</div>
+    <?php
+    }
+    else
+    {
+    ?>
+    Willkommen !
+    <?php
+    }
+    ?>
 </div>
 </body>
 </html>

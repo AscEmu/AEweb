@@ -140,4 +140,14 @@ class AccountDB extends Database
         $query = "INSERT INTO accounts(acc_name, encrypted_password, banned, email, flags, banreason) VALUES('$name', '$password', '0', '$email', '24', '')";
         return mysqli_query($this->connection, $query);
     }
+    
+    function getIdForAccountName($userName)
+    {
+        $name = $this->escapeString($userName);
+        
+        $query = "SELECT id FROM accounts WHERE acc_name = '$name'";
+        $result = mysqli_query($this->connection, $query);
+        $value = $result->fetch_assoc();
+        return $value['id'];
+    }
 }
