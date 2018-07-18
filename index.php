@@ -202,7 +202,7 @@
     else
     {
     ?>
-    Willkommen !
+    Welcome <?php echo $_SESSION['userid']; ?>, <a href="logout.php">Logout</a>
     <?php
     }
     ?>
