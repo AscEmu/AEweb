@@ -1,12 +1,41 @@
 <?php
 	ob_start();
+    session_start();
 	include_once 'background.php';
     include_once 'include/database.inc.php';
     include_once 'include/accountDB.inc.php';
 
     $accDB = new AccountDB();
-	$error = false;
-    
+
+    // login
+    $userName = "";
+    $userPassword = "";
+
+    $userNameError = "";
+    $userPassError = "";
+
+    if (isset($_POST['btn-signin']))
+	{
+		$userName = $_POST['userName'];
+		$userPassword = $_POST['userPass'];
+        
+        $userNameError = $accDB->checkName($userName, false);
+        $userPassError = $accDB->checkCorrectPassword($userName, $userPassword);
+        // after all checks
+        //$_SESSION['userid'] = $user['id'];  // user-id = account Id
+        if (empty($userNameError) && empty($userPassError))
+        {
+            $errLoginTyp = "success";
+            echo "Signed in with name " .$userName. " and pw: " .$userPassword;
+        }
+        else
+        {
+            $errLoginTyp = "danger";
+            $errLoginMSG = "Something went wrong, try again later...";	
+        }
+    }
+
+    // register
     $name = "";
     $email = "";
     $pass = "";
@@ -14,65 +43,18 @@
     $nameError = "";
     $emailError = "";
     $passError = "";
-    
+
 	if (isset($_POST['btn-signup']))
 	{
 		$name = $_POST['name'];
 		$email = $_POST['email'];
 		$pass = $_POST['pass'];
 		
-		if (empty($name))
-		{
-			$error = true;
-			$nameError = "Please enter an account name.";
-		}
-		else if (strlen($name) < 3)
-		{
-			$error = true;
-			$nameError = "Name must have atleat 3 characters.";
-		}
-		else if (!preg_match("/^[a-zA-Z]+$/",$name))
-		{
-			$error = true;
-			$nameError = "Name must contain alphabets and NO spaces.";
-		}
-		else
-		{
-			$count = $accDB->isNameAlreadyRegistered($name);
-			if($count!=0)
-			{
-				$error = true;
-				$nameError = "Name is already in use.";
-			}
-        }
+        $nameError = $accDB->checkName($name, true);
+        $emailError = $accDB->checkEMail($email);
+		$passError = $accDB->checkPassword($pass);
 
-		if (!filter_var($email,FILTER_VALIDATE_EMAIL))
-		{
-			$error = true;
-			$emailError = "Please enter valid email address.";
-		}
-		else
-		{
-			$count = $accDB->isEMailAlreadyRegistered($email);
-			if($count!=0)
-			{
-				$error = true;
-				$emailError = "Provided Email is already in use.";
-			}
-		}
-
-		if (empty($pass))
-		{
-			$error = true;
-			$passError = "Please enter password.";
-		}
-		else if(strlen($pass) < 6)
-		{
-			$error = true;
-			$passError = "Password must have atleast 6 characters.";
-		}
-
-		if(!$error)
+		if(empty($emailError) && empty($nameError) && empty($passError))
 		{
             $res = $accDB->createNewAccount($name, $pass, $email);
 			if ($res)
@@ -104,7 +86,7 @@
 <div class="container">
 	<div id="login-form">
 		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
-			<div class="col-md-4">
+			<div class="col-md-6">
 				<div class="form-group">
 					<h2 class="">Account Registration</h2>
 				</div>
@@ -160,6 +142,54 @@
 					<hr />
 				</div>
 			</div>
+            <div class="col-md-6">
+                <div class="form-group">
+					<h2 class="">Login</h2>
+				</div>
+				<div class="form-group">
+					<hr />
+				</div>
+                <?php
+					if (isset($errLoginMSG))
+					{
+				?>
+				<div class="form-group">
+					<div class="alert alert-<?php echo ($errLoginTyp=="success") ? "success" : $errLoginTyp; ?>">
+						<span class="fa fa-info" aria-hidden="true"></span> <?php echo $errLoginMSG; ?>
+					</div>
+				</div>
+				<?php
+					}
+				?>
+                <div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
+						<input type="text" name="userName" class="form-control" placeholder="Enter Name" maxlength="50" />
+					</div>
+					<span class="text-danger"><?php echo $userNameError; ?></span>
+				</div>
+                
+                <div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"><span class="fa fa-key" aria-hidden="true"></span></span>
+						<input type="password" name="userPass" class="form-control" placeholder="Enter Password" maxlength="15" />
+					</div>
+					<span class="text-danger"><?php echo $userPassError; ?></span>
+				</div>
+                
+                <div class="form-group">
+					<hr />
+				</div>
+            
+				<div class="form-group">
+					<button type="submit" class="btn btn-block btn-primary" name="btn-signin">Sign In</button>
+				</div>
+            
+				<div class="form-group">
+					<hr />
+				</div>
+                
+            </div>
 		</form>
 	</div>
 </div>
