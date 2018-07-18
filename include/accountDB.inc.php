@@ -36,8 +36,8 @@ class AccountDB extends Database
     function createNewAccount($name, $pass, $email)
     {
         $name = $this->escapeString($name);
-		$email = $this->escapeString($pass);
-		$pass = $this->escapeString($email);
+		$email = $this->escapeString($email);
+		$pass = $this->escapeString($pass);
         
         $password = hash('sha1', strtoupper($name . ':' . $pass));
         
