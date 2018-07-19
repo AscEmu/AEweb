@@ -4,6 +4,7 @@
 	include_once 'background.php';
     include_once 'include/database.inc.php';
     include_once 'include/accountDB.inc.php';
+    include_once 'include/session.inc.php';
 
     $accDB = new AccountDB();
 
@@ -21,13 +22,11 @@
         
         $userNameError = $accDB->checkName($userName, false);
         $userPassError = $accDB->checkCorrectPassword($userName, $userPassword);
-        // after all checks
-        //$_SESSION['userid'] = $user['id'];  // user-id = account Id
+        
         if (empty($userNameError) && empty($userPassError))
         {
             $errLoginTyp = "success";
-            echo "Signed in with name " .$userName. " and pw: " .$userPassword;
-            $_SESSION['userid'] = $accDB->getIdForAccountName($userName);
+            Session::set('userid', $accDB->getIdForAccountName($userName));
         }
         else
         {
@@ -86,7 +85,7 @@
 <body>
 <div class="container">
     <?php
-    if (!isset($_SESSION['userid']))
+    if (!Session::get('userid'))
     {
     ?>
 	<div id="login-form">
@@ -202,7 +201,7 @@
     else
     {
     ?>
-    Welcome <?php echo $_SESSION['userid']; ?>, <a href="logout.php">Logout</a>
+    Welcome <?php echo Session::get('userid'); ?>, <a href="logout.php">Logout</a>
     <?php
     }
     ?>
