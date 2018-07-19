@@ -81,18 +81,87 @@
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- move to seperated css file -->
+<style>
+    .user-bar {
+        overflow: hidden;
+        background-color: #000;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+    }
+    .main {
+        margin-top: 30px;
+        height: 2000px;
+    }
+</style>
+    <style>
+#overlay-login {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#login{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+        
+#overlay-register {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#register{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+</style>
 </head>
 <body>
-<div class="container">
-    <!-- new place -->
-    <?php
-       if (!Session::get('userid'))
-       {
-       ?>
-    <div class="col-md-4">
+
+<div class="user-bar">
+    <div class="container">
+        Welcome to our page! Please <button type="button" class="btn btn-success btn-xs" onclick="loginOn()">Login</button> or <button type="button" class="btn btn-success btn-xs" onclick="registerOn()">Register</button>
     </div>
-    <div class="col-md-4">
+</div>
+    
+<div class="container main">
+    <div class="col-md-12">
+        <h2>Welcome to this page!</h2>
+    </div>
+    <!-- new place -->
+    <div id="overlay-login" onclick="loginOff()">
         <div id="login">
+            <div id="login-form">
             <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
              <div class="form-group">
                 <h2 class="">Login</h2>
@@ -136,9 +205,13 @@
                 <hr />
              </div>
           </form>
-            If you need an account, please <button type="button" class="btn btn-success btn-xs" onclick="toggleRegisterLogin()">Register</button>
         </div>
-        <div id="register" style="display:none">
+            If you need an account, please <button type="button" class="btn btn-success btn-xs" onclick="loginOff;registerOn()()">Register</button>
+        </div>
+    </div>
+    <div id="overlay-register" onclick="registerOff()">
+        <div id="register">
+            <div id="register-form">
             <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
              <div class="form-group">
                 <h2 class="">Account Registration</h2>
@@ -189,8 +262,17 @@
                 <hr />
              </div>
           </form>
-            If you already have an account, please <button type="button" class="btn btn-success btn-xs" onclick="toggleRegisterLogin()">Login</button>
+            </div>
+            If you already have an account, please <button type="button" class="btn btn-success btn-xs" onclick="registerOff();loginOn()">Login</button>
         </div>
+    </div>
+    <?php
+       if (!Session::get('userid'))
+       {
+       ?>
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
     </div>
     <div class="col-md-4">
     </div>
@@ -205,21 +287,36 @@
     ?>
 </div>
     
-<script>
-function toggleRegisterLogin() {
-    var loginId = document.getElementById("login");
-    var registerId = document.getElementById("register");
-    if (loginId.style.display == "none")
-    {
-        loginId.style.display = "block";
-        registerId.style.display = "none";
-    }
-    else
-    {
-        loginId.style.display = "none";
-        registerId.style.display = "block";
-    }
+    <script>
+        
+function loginOn() {
+    document.getElementById("overlay-login").style.display = "block";
 }
+
+function loginOff() {
+    document.getElementById("overlay-login").style.display = "none";
+}
+        
+function registerOn() {
+    document.getElementById("overlay-register").style.display = "block";
+}
+
+function registerOff() {
+    document.getElementById("overlay-register").style.display = "none";
+}
+        
+// ignore onclick event in this div ids
+$(document).ready(function() {
+
+    $('#register-form').click(function(e) {
+        e.stopPropagation();
+    });
+    
+    $('#login-form').click(function(e) {
+        e.stopPropagation();
+    });
+
+});
 </script>
 </body>
 </html>
