@@ -5,8 +5,10 @@
     include_once 'include/database.inc.php';
     include_once 'include/accountDB.inc.php';
     include_once 'include/session.inc.php';
+    include_once 'include/webDB.inc.php';
 
     $accDB = new AccountDB();
+    $webDB = new WebDB();
 
     // login
     $userName = "";
@@ -97,12 +99,16 @@
         }
         else
         {
+            $userFields = $webDB->getAllUserDataForAccount(Session::get('userid'));
+            if (!empty($userFields))
+            {
     ?>
         <p style="text-align:left;">
-            Welcome <?php echo Session::get('name'); ?>
+            <img src="uploads/avatars/<?php echo $userFields['avatar'] ?>" width="auto" height="100%" style="border:3px solid grey" > Welcome <?php echo $userFields['displayName'] ?>
             <span style="float:right;"><a href="logout.php" class="btn btn-danger btn-xs" role="button" aria-pressed="true"><i class="fa fa-power-off"></i> Logout</a></span>
         </p>
     <?php
+            }
         }
     ?>
     </div>
@@ -112,6 +118,7 @@
     <div class="col-md-12">
         <!-- print error if set -->
         <?php include 'content/errorForm.content.php';?>
+        
         <h2>Welcome to this page!</h2>
     </div>
     <!-- load forms -->

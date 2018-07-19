@@ -9,6 +9,17 @@ class Database
     private $password;
     private $dbname;
     
+    protected function connectToWebDB()
+    {
+        $this->servername = Config\WebDB::dbhost;
+        $this->username = Config\WebDB::dbuser;
+        $this->password = Config\WebDB::dbpass;
+        $this->dbname = Config\WebDB::dbname;
+        
+        $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+        return $conn;
+    }
+    
     protected function connectToAccountDB()
     {
         $this->servername = Config\AccountDB::dbhost;
