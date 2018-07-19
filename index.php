@@ -15,6 +15,8 @@
     $userNameError = "";
     $userPassError = "";
 
+    $hasLoginError = false;
+
     if (isset($_POST['btn-signin']))
 	{
 		$userName = $_POST['userName'];
@@ -23,16 +25,13 @@
         $userNameError = $accDB->checkName($userName, false);
         $userPassError = $accDB->checkCorrectPassword($userName, $userPassword);
         
-        if (empty($userNameError) && empty($userPassError))
+        if (!empty($userNameError) || !empty($userPassError))
+            $hasLoginError = true;
+        
+        if (!$hasLoginError)
         {
-            $errLoginTyp = "success";
             Session::set('userid', $accDB->getIdForAccountName($userName));
             Session::set('name', $userName);
-        }
-        else
-        {
-            $errLoginTyp = "danger";
-            $errLoginMSG = "Something went wrong, try again later...";	
         }
     }
 
@@ -45,6 +44,10 @@
     $emailError = "";
     $passError = "";
 
+    $errMSG = "";
+
+    $hasRegisterError = false;
+
 	if (isset($_POST['btn-signup']))
 	{
 		$name = $_POST['name'];
@@ -54,23 +57,20 @@
         $nameError = $accDB->checkName($name, true);
         $emailError = $accDB->checkEMail($email);
 		$passError = $accDB->checkPassword($pass);
+        
+        if(!empty($emailError) || !empty($nameError) || !empty($passError))
+            $hasRegisterError = true;
 
-		if(empty($emailError) && empty($nameError) && empty($passError))
+		if(!$hasRegisterError)
 		{
             $res = $accDB->createNewAccount($name, $pass, $email);
 			if ($res)
 			{
-				$errTyp = "success";
-				$errMSG = "Successfully registered, you may login now";
+                $errMSG = "Successfully registered, you may login now";
 				unset($name);
 				unset($email);
 				unset($pass);
 			}
-			else
-			{
-				$errTyp = "danger";
-				$errMSG = "Something went wrong, try again later...";	
-			}	
 		}
 	}
 ?>
@@ -88,28 +88,74 @@
 
 <div class="user-bar">
     <div class="container">
-        <?php
-       if (!Session::get('userid'))
-       {
-       ?>
+    <?php
+        if (!Session::get('userid'))
+        {
+    ?>
         Welcome, Guest. Please <button type="button" class="btn btn-success btn-xs" onclick="loginOn()">Login</button> or <button type="button" class="btn btn-success btn-xs" onclick="registerOn()">Register</button>
-        <?php
+    <?php
         }
         else
         {
-        ?>
+    ?>
         <p style="text-align:left;">
             Welcome <?php echo Session::get('name'); ?>
             <span style="float:right;"><a href="logout.php" class="btn btn-danger btn-xs" role="button" aria-pressed="true"><i class="fa fa-power-off"></i> Logout</a></span>
         </p>
-        <?php
+    <?php
         }
-        ?>
+    ?>
     </div>
 </div>
     
 <div class="container main">
     <div class="col-md-12">
+        <?php
+            if ($hasLoginError)
+            {
+        ?>
+        <div class="form-group">
+            <div class="alert alert-danger">
+                <span class="fa fa-info" aria-hidden="true"></span>
+                <?php 
+                    echo $userNameError;
+                    echo isset($userPassError) ? '<br>' : "";
+                    echo $userPassError;
+                ?>
+            </div>
+        </div>
+        <?php
+            }
+        ?>
+        <?php
+            if ($hasRegisterError)
+            {
+        ?>
+        <div class="form-group">
+            <div class="alert alert-danger">
+                <span class="fa fa-info" aria-hidden="true"></span>
+                <?php 
+                    echo $nameError;
+                    echo isset($emailError) ? '<br>' : "";
+                    echo $emailError;
+                    echo isset($passError) ? '<br>' : "";
+                    echo $passError;
+                ?>
+            </div>
+        </div>
+        <?php
+            }
+            else if (!empty($errMSG))
+            {
+        ?>
+        <div class="form-group">
+            <div class="alert alert-success">
+                <span class="fa fa-info" aria-hidden="true"></span> <?php echo $errMSG; ?>
+            </div>
+        </div>
+        <?php
+            }
+        ?>
         <h2>Welcome to this page!</h2>
     </div>
     <!-- new place -->
@@ -123,31 +169,20 @@
              <div class="form-group">
                 <hr />
              </div>
-             <?php
-                if (isset($errLoginMSG))
-                {
-                ?>
-             <div class="form-group">
-                <div class="alert alert-<?php echo ($errLoginTyp=="success") ? "success" : $errLoginTyp; ?>">
-                   <span class="fa fa-info" aria-hidden="true"></span> <?php echo $errLoginMSG; ?>
-                </div>
-             </div>
-             <?php
-                }
-                ?>
+             
              <div class="form-group">
                 <div class="input-group">
                    <span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
                    <input type="text" name="userName" class="form-control" placeholder="Enter Name" maxlength="50" />
                 </div>
-                <span class="text-danger"><?php echo $userNameError; ?></span>
+                
              </div>
              <div class="form-group">
                 <div class="input-group">
                    <span class="input-group-addon"><span class="fa fa-key" aria-hidden="true"></span></span>
                    <input type="password" name="userPass" class="form-control" placeholder="Enter Password" maxlength="15" />
                 </div>
-                <span class="text-danger"><?php echo $userPassError; ?></span>
+                
              </div>
              <div class="form-group">
                 <hr />
@@ -173,38 +208,27 @@
              <div class="form-group">
                 <hr />
              </div>
-             <?php
-                if (isset($errMSG))
-                {
-                ?>
-             <div class="form-group">
-                <div class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
-                   <span class="fa fa-info" aria-hidden="true"></span> <?php echo $errMSG; ?>
-                </div>
-             </div>
-             <?php
-                }
-                ?>
+             
              <div class="form-group">
                 <div class="input-group">
                    <span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
                    <input type="text" name="name" class="form-control" placeholder="Enter Name" maxlength="50" />
                 </div>
-                <span class="text-danger"><?php echo $nameError; ?></span>
+                
              </div>
              <div class="form-group">
                 <div class="input-group">
                    <span class="input-group-addon"><span class="fa fa-envelope" aria-hidden="true"></span></span>
                    <input type="email" name="email" class="form-control" placeholder="Enter Your Email" maxlength="40" />
                 </div>
-                <span class="text-danger"><?php echo $emailError; ?></span>
+                
              </div>
              <div class="form-group">
                 <div class="input-group">
                    <span class="input-group-addon"><span class="fa fa-key" aria-hidden="true"></span></span>
                    <input type="password" name="pass" class="form-control" placeholder="Enter Password" maxlength="15" />
                 </div>
-                <span class="text-danger"><?php echo $passError; ?></span>
+                
              </div>
              <div class="form-group">
                 <hr />
