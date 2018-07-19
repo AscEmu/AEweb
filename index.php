@@ -85,117 +85,110 @@
 <body>
 <div class="container">
     <?php
-    if (!Session::get('userid'))
-    {
-    ?>
-	<div id="login-form">
-		<form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
-			<div class="col-md-6">
-				<div class="form-group">
-					<h2 class="">Account Registration</h2>
-				</div>
-				<div class="form-group">
-					<hr />
-				</div>
-				<?php
-					if (isset($errMSG))
-					{
-				?>
-				<div class="form-group">
-					<div class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
-						<span class="fa fa-info" aria-hidden="true"></span> <?php echo $errMSG; ?>
-					</div>
-				</div>
-				<?php
-					}
-				?>
-            
-				<div class="form-group">
-					<div class="input-group">
-						<span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
-						<input type="text" name="name" class="form-control" placeholder="Enter Name" maxlength="50" />
-					</div>
-					<span class="text-danger"><?php echo $nameError; ?></span>
-				</div>
-            
-				<div class="form-group">
-					<div class="input-group">
-						<span class="input-group-addon"><span class="fa fa-envelope" aria-hidden="true"></span></span>
-						<input type="email" name="email" class="form-control" placeholder="Enter Your Email" maxlength="40" />
-					</div>
-					<span class="text-danger"><?php echo $emailError; ?></span>
-				</div>
-            
-				<div class="form-group">
-					<div class="input-group">
-						<span class="input-group-addon"><span class="fa fa-key" aria-hidden="true"></span></span>
-						<input type="password" name="pass" class="form-control" placeholder="Enter Password" maxlength="15" />
-					</div>
-					<span class="text-danger"><?php echo $passError; ?></span>
-				</div>
-            
-				<div class="form-group">
-					<hr />
-				</div>
-            
-				<div class="form-group">
-					<button type="submit" class="btn btn-block btn-primary" name="btn-signup">Sign Up</button>
-				</div>
-            
-				<div class="form-group">
-					<hr />
-				</div>
-			</div>
-            <div class="col-md-6">
-                <div class="form-group">
-					<h2 class="">Login</h2>
-				</div>
-				<div class="form-group">
-					<hr />
-				</div>
-                <?php
-					if (isset($errLoginMSG))
-					{
-				?>
-				<div class="form-group">
-					<div class="alert alert-<?php echo ($errLoginTyp=="success") ? "success" : $errLoginTyp; ?>">
-						<span class="fa fa-info" aria-hidden="true"></span> <?php echo $errLoginMSG; ?>
-					</div>
-				</div>
-				<?php
-					}
-				?>
-                <div class="form-group">
-					<div class="input-group">
-						<span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
-						<input type="text" name="userName" class="form-control" placeholder="Enter Name" maxlength="50" />
-					</div>
-					<span class="text-danger"><?php echo $userNameError; ?></span>
-				</div>
-                
-                <div class="form-group">
-					<div class="input-group">
-						<span class="input-group-addon"><span class="fa fa-key" aria-hidden="true"></span></span>
-						<input type="password" name="userPass" class="form-control" placeholder="Enter Password" maxlength="15" />
-					</div>
-					<span class="text-danger"><?php echo $userPassError; ?></span>
-				</div>
-                
-                <div class="form-group">
-					<hr />
-				</div>
-            
-				<div class="form-group">
-					<button type="submit" class="btn btn-block btn-primary" name="btn-signin">Sign In</button>
-				</div>
-            
-				<div class="form-group">
-					<hr />
-				</div>
-                
-            </div>
-		</form>
-	</div>
+       if (!Session::get('userid'))
+       {
+       ?>
+    <div class="col-md-6">
+        <div id="login-form">
+          <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
+             <div class="form-group">
+                <h2 class="">Account Registration</h2>
+             </div>
+             <div class="form-group">
+                <hr />
+             </div>
+             <?php
+                if (isset($errMSG))
+                {
+                ?>
+             <div class="form-group">
+                <div class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
+                   <span class="fa fa-info" aria-hidden="true"></span> <?php echo $errMSG; ?>
+                </div>
+             </div>
+             <?php
+                }
+                ?>
+             <div class="form-group">
+                <div class="input-group">
+                   <span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
+                   <input type="text" name="name" class="form-control" placeholder="Enter Name" maxlength="50" />
+                </div>
+                <span class="text-danger"><?php echo $nameError; ?></span>
+             </div>
+             <div class="form-group">
+                <div class="input-group">
+                   <span class="input-group-addon"><span class="fa fa-envelope" aria-hidden="true"></span></span>
+                   <input type="email" name="email" class="form-control" placeholder="Enter Your Email" maxlength="40" />
+                </div>
+                <span class="text-danger"><?php echo $emailError; ?></span>
+             </div>
+             <div class="form-group">
+                <div class="input-group">
+                   <span class="input-group-addon"><span class="fa fa-key" aria-hidden="true"></span></span>
+                   <input type="password" name="pass" class="form-control" placeholder="Enter Password" maxlength="15" />
+                </div>
+                <span class="text-danger"><?php echo $passError; ?></span>
+             </div>
+             <div class="form-group">
+                <hr />
+             </div>
+             <div class="form-group">
+                <button type="submit" class="btn btn-block btn-primary" name="btn-signup">Sign Up</button>
+             </div>
+             <div class="form-group">
+                <hr />
+             </div>
+          </form>
+       </div>
+    </div>
+    <div class="col-md-6">
+       <div id="login-form">
+          <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
+             <div class="form-group">
+                <h2 class="">Login</h2>
+             </div>
+             <div class="form-group">
+                <hr />
+             </div>
+             <?php
+                if (isset($errLoginMSG))
+                {
+                ?>
+             <div class="form-group">
+                <div class="alert alert-<?php echo ($errLoginTyp=="success") ? "success" : $errLoginTyp; ?>">
+                   <span class="fa fa-info" aria-hidden="true"></span> <?php echo $errLoginMSG; ?>
+                </div>
+             </div>
+             <?php
+                }
+                ?>
+             <div class="form-group">
+                <div class="input-group">
+                   <span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
+                   <input type="text" name="userName" class="form-control" placeholder="Enter Name" maxlength="50" />
+                </div>
+                <span class="text-danger"><?php echo $userNameError; ?></span>
+             </div>
+             <div class="form-group">
+                <div class="input-group">
+                   <span class="input-group-addon"><span class="fa fa-key" aria-hidden="true"></span></span>
+                   <input type="password" name="userPass" class="form-control" placeholder="Enter Password" maxlength="15" />
+                </div>
+                <span class="text-danger"><?php echo $userPassError; ?></span>
+             </div>
+             <div class="form-group">
+                <hr />
+             </div>
+             <div class="form-group">
+                <button type="submit" class="btn btn-block btn-primary" name="btn-signin">Sign In</button>
+             </div>
+             <div class="form-group">
+                <hr />
+             </div>
+          </form>
+       </div>
+    </div>
     <?php
     }
     else
