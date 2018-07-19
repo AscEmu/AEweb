@@ -27,6 +27,7 @@
         {
             $errLoginTyp = "success";
             Session::set('userid', $accDB->getIdForAccountName($userName));
+            Session::set('name', $userName);
         }
         else
         {
@@ -87,7 +88,23 @@
 
 <div class="user-bar">
     <div class="container">
-        Welcome to our page! Please <button type="button" class="btn btn-success btn-xs" onclick="loginOn()">Login</button> or <button type="button" class="btn btn-success btn-xs" onclick="registerOn()">Register</button>
+        <?php
+       if (!Session::get('userid'))
+       {
+       ?>
+        Welcome, Guest. Please <button type="button" class="btn btn-success btn-xs" onclick="loginOn()">Login</button> or <button type="button" class="btn btn-success btn-xs" onclick="registerOn()">Register</button>
+        <?php
+        }
+        else
+        {
+        ?>
+        <p style="text-align:left;">
+            Welcome <?php echo Session::get('name'); ?>
+            <span style="float:right;"><a href="logout.php" class="btn btn-danger btn-xs" role="button" aria-pressed="true"><i class="fa fa-power-off"></i> Logout</a></span>
+        </p>
+        <?php
+        }
+        ?>
     </div>
 </div>
     
@@ -203,25 +220,6 @@
             If you already have an account, please <button type="button" class="btn btn-success btn-xs" onclick="registerOff();loginOn()">Login</button>
         </div>
     </div>
-    <?php
-       if (!Session::get('userid'))
-       {
-       ?>
-    <div class="col-md-4">
-    </div>
-    <div class="col-md-4">
-    </div>
-    <div class="col-md-4">
-    </div>
-    <?php
-    }
-    else
-    {
-    ?>
-    Welcome <?php echo Session::get('userid'); ?>, <a href="logout.php">Logout</a>
-    <?php
-    }
-    ?>
 </div>
     
 <script>
