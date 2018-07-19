@@ -92,7 +92,7 @@
         if (!Session::get('userid'))
         {
     ?>
-        Welcome, Guest. Please <button type="button" class="btn btn-success btn-xs" onclick="loginOn()">Login</button> or <button type="button" class="btn btn-success btn-xs" onclick="registerOn()">Register</button>
+        Welcome, Guest. Please <button type="button" class="btn btn-success btn-xs" onclick="overlayOn('login')">Login</button> or <button type="button" class="btn btn-success btn-xs" onclick="overlayOn('register')">Register</button>
     <?php
         }
         else
@@ -125,20 +125,12 @@
     
 <script>
 
-function loginOn() {
-    document.getElementById("overlay-login").style.display = "block";
+function overlayOn(name) {
+    document.getElementById("overlay-"+name).style.display = "block";
 }
 
-function loginOff() {
-    document.getElementById("overlay-login").style.display = "none";
-}
-        
-function registerOn() {
-    document.getElementById("overlay-register").style.display = "block";
-}
-
-function registerOff() {
-    document.getElementById("overlay-register").style.display = "none";
+function overlayOff(name) {
+    document.getElementById("overlay-"+name).style.display = "none";
 }
         
 // ignore onclick event in this div ids

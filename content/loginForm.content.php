@@ -1,4 +1,4 @@
-    <div id="overlay-login" onclick="loginOff()">
+    <div id="overlay-login" onclick="overlayOff('login')">
         <div id="login">
             <div id="login-form">
             <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
@@ -34,6 +34,6 @@
              </div>
           </form>
         </div>
-            If you need an account, please <button type="button" class="btn btn-success btn-xs" onclick="loginOff;registerOn()()">Register</button>
+            If you need an account, please <button type="button" class="btn btn-success btn-xs" onclick="overlayOff('login');overlayOn('register')()">Register</button>
         </div>
     </div>

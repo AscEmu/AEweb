@@ -1,4 +1,4 @@
-    <div id="overlay-register" onclick="registerOff()">
+    <div id="overlay-register" onclick="overlayOff('register')">
         <div id="register">
             <div id="register-form">
             <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
@@ -41,6 +41,6 @@
              </div>
           </form>
             </div>
-            If you already have an account, please <button type="button" class="btn btn-success btn-xs" onclick="registerOff();loginOn()">Login</button>
+            If you already have an account, please <button type="button" class="btn btn-success btn-xs" onclick="overlayOff('register');overlayOn('login')">Login</button>
         </div>
     </div>
