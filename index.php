@@ -110,139 +110,16 @@
     
 <div class="container main">
     <div class="col-md-12">
-        <?php
-            if ($hasLoginError)
-            {
-        ?>
-        <div class="form-group">
-            <div class="alert alert-danger">
-                <span class="fa fa-info" aria-hidden="true"></span>
-                <?php 
-                    echo $userNameError;
-                    echo isset($userPassError) ? '<br>' : "";
-                    echo $userPassError;
-                ?>
-            </div>
-        </div>
-        <?php
-            }
-        ?>
-        <?php
-            if ($hasRegisterError)
-            {
-        ?>
-        <div class="form-group">
-            <div class="alert alert-danger">
-                <span class="fa fa-info" aria-hidden="true"></span>
-                <?php 
-                    echo $nameError;
-                    echo isset($emailError) ? '<br>' : "";
-                    echo $emailError;
-                    echo isset($passError) ? '<br>' : "";
-                    echo $passError;
-                ?>
-            </div>
-        </div>
-        <?php
-            }
-            else if (!empty($errMSG))
-            {
-        ?>
-        <div class="form-group">
-            <div class="alert alert-success">
-                <span class="fa fa-info" aria-hidden="true"></span> <?php echo $errMSG; ?>
-            </div>
-        </div>
-        <?php
-            }
-        ?>
+        <!-- print error if set -->
+        <?php include 'content/errorForm.content.php';?>
         <h2>Welcome to this page!</h2>
     </div>
-    <!-- new place -->
-    <div id="overlay-login" onclick="loginOff()">
-        <div id="login">
-            <div id="login-form">
-            <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
-             <div class="form-group">
-                <h2 class="">Login</h2>
-             </div>
-             <div class="form-group">
-                <hr />
-             </div>
-             
-             <div class="form-group">
-                <div class="input-group">
-                   <span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
-                   <input type="text" name="userName" class="form-control" placeholder="Enter Name" maxlength="50" />
-                </div>
-                
-             </div>
-             <div class="form-group">
-                <div class="input-group">
-                   <span class="input-group-addon"><span class="fa fa-key" aria-hidden="true"></span></span>
-                   <input type="password" name="userPass" class="form-control" placeholder="Enter Password" maxlength="15" />
-                </div>
-                
-             </div>
-             <div class="form-group">
-                <hr />
-             </div>
-             <div class="form-group">
-                <button type="submit" class="btn btn-block btn-primary" name="btn-signin">Sign In</button>
-             </div>
-             <div class="form-group">
-                <hr />
-             </div>
-          </form>
-        </div>
-            If you need an account, please <button type="button" class="btn btn-success btn-xs" onclick="loginOff;registerOn()()">Register</button>
-        </div>
-    </div>
-    <div id="overlay-register" onclick="registerOff()">
-        <div id="register">
-            <div id="register-form">
-            <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
-             <div class="form-group">
-                <h2 class="">Account Registration</h2>
-             </div>
-             <div class="form-group">
-                <hr />
-             </div>
-             
-             <div class="form-group">
-                <div class="input-group">
-                   <span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
-                   <input type="text" name="name" class="form-control" placeholder="Enter Name" maxlength="50" />
-                </div>
-                
-             </div>
-             <div class="form-group">
-                <div class="input-group">
-                   <span class="input-group-addon"><span class="fa fa-envelope" aria-hidden="true"></span></span>
-                   <input type="email" name="email" class="form-control" placeholder="Enter Your Email" maxlength="40" />
-                </div>
-                
-             </div>
-             <div class="form-group">
-                <div class="input-group">
-                   <span class="input-group-addon"><span class="fa fa-key" aria-hidden="true"></span></span>
-                   <input type="password" name="pass" class="form-control" placeholder="Enter Password" maxlength="15" />
-                </div>
-                
-             </div>
-             <div class="form-group">
-                <hr />
-             </div>
-             <div class="form-group">
-                <button type="submit" class="btn btn-block btn-primary" name="btn-signup">Sign Up</button>
-             </div>
-             <div class="form-group">
-                <hr />
-             </div>
-          </form>
-            </div>
-            If you already have an account, please <button type="button" class="btn btn-success btn-xs" onclick="registerOff();loginOn()">Login</button>
-        </div>
+    <!-- load forms -->
+    <?php include 'content/loginForm.content.php';?>
+    <?php include 'content/registerForm.content.php';?>
+    
+    <div class="col-md-12">
+        Some Content...
     </div>
 </div>
     
