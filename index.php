@@ -84,13 +84,62 @@
 </head>
 <body>
 <div class="container">
+    <!-- new place -->
     <?php
        if (!Session::get('userid'))
        {
        ?>
-    <div class="col-md-6">
-        <div id="login-form">
-          <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+        <div id="login">
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
+             <div class="form-group">
+                <h2 class="">Login</h2>
+             </div>
+             <div class="form-group">
+                <hr />
+             </div>
+             <?php
+                if (isset($errLoginMSG))
+                {
+                ?>
+             <div class="form-group">
+                <div class="alert alert-<?php echo ($errLoginTyp=="success") ? "success" : $errLoginTyp; ?>">
+                   <span class="fa fa-info" aria-hidden="true"></span> <?php echo $errLoginMSG; ?>
+                </div>
+             </div>
+             <?php
+                }
+                ?>
+             <div class="form-group">
+                <div class="input-group">
+                   <span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
+                   <input type="text" name="userName" class="form-control" placeholder="Enter Name" maxlength="50" />
+                </div>
+                <span class="text-danger"><?php echo $userNameError; ?></span>
+             </div>
+             <div class="form-group">
+                <div class="input-group">
+                   <span class="input-group-addon"><span class="fa fa-key" aria-hidden="true"></span></span>
+                   <input type="password" name="userPass" class="form-control" placeholder="Enter Password" maxlength="15" />
+                </div>
+                <span class="text-danger"><?php echo $userPassError; ?></span>
+             </div>
+             <div class="form-group">
+                <hr />
+             </div>
+             <div class="form-group">
+                <button type="submit" class="btn btn-block btn-primary" name="btn-signin">Sign In</button>
+             </div>
+             <div class="form-group">
+                <hr />
+             </div>
+          </form>
+            If you need an account, please <button type="button" class="btn btn-success btn-xs" onclick="toggleRegisterLogin()">Register</button>
+        </div>
+        <div id="register" style="display:none">
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
              <div class="form-group">
                 <h2 class="">Account Registration</h2>
              </div>
@@ -140,54 +189,10 @@
                 <hr />
              </div>
           </form>
-       </div>
+            If you already have an account, please <button type="button" class="btn btn-success btn-xs" onclick="toggleRegisterLogin()">Login</button>
+        </div>
     </div>
-    <div class="col-md-6">
-       <div id="login-form">
-          <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
-             <div class="form-group">
-                <h2 class="">Login</h2>
-             </div>
-             <div class="form-group">
-                <hr />
-             </div>
-             <?php
-                if (isset($errLoginMSG))
-                {
-                ?>
-             <div class="form-group">
-                <div class="alert alert-<?php echo ($errLoginTyp=="success") ? "success" : $errLoginTyp; ?>">
-                   <span class="fa fa-info" aria-hidden="true"></span> <?php echo $errLoginMSG; ?>
-                </div>
-             </div>
-             <?php
-                }
-                ?>
-             <div class="form-group">
-                <div class="input-group">
-                   <span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
-                   <input type="text" name="userName" class="form-control" placeholder="Enter Name" maxlength="50" />
-                </div>
-                <span class="text-danger"><?php echo $userNameError; ?></span>
-             </div>
-             <div class="form-group">
-                <div class="input-group">
-                   <span class="input-group-addon"><span class="fa fa-key" aria-hidden="true"></span></span>
-                   <input type="password" name="userPass" class="form-control" placeholder="Enter Password" maxlength="15" />
-                </div>
-                <span class="text-danger"><?php echo $userPassError; ?></span>
-             </div>
-             <div class="form-group">
-                <hr />
-             </div>
-             <div class="form-group">
-                <button type="submit" class="btn btn-block btn-primary" name="btn-signin">Sign In</button>
-             </div>
-             <div class="form-group">
-                <hr />
-             </div>
-          </form>
-       </div>
+    <div class="col-md-4">
     </div>
     <?php
     }
@@ -199,6 +204,23 @@
     }
     ?>
 </div>
+    
+<script>
+function toggleRegisterLogin() {
+    var loginId = document.getElementById("login");
+    var registerId = document.getElementById("register");
+    if (loginId.style.display == "none")
+    {
+        loginId.style.display = "block";
+        registerId.style.display = "none";
+    }
+    else
+    {
+        loginId.style.display = "none";
+        registerId.style.display = "block";
+    }
+}
+</script>
 </body>
 </html>
 <?php ob_end_flush(); ?>
