@@ -111,37 +111,43 @@
     
 <title><?php echo Config\Info::siteName ?></title>
     
-<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    
 <link rel="stylesheet" href="css/style.css" type="text/css" />
-<link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <div class="user-bar">
-    <div class="col-md-12">
-        <div class="container">
-        <?php
-            if (!Session::get('userid'))
-            {
-        ?>
-            Welcome, Guest. Please <button type="button" class="btn btn-success btn-xs" onclick="overlayOn('login')">Login</button> or <button type="button" class="btn btn-success btn-xs" onclick="overlayOn('register')">Register</button>
-        <?php
-            }
-            else
-            {
-                $userFields = $webDB->getAllUserDataForAccount(Session::get('userid'));
-                if (!empty($userFields))
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container">
+            <?php
+                if (!Session::get('userid'))
                 {
-        ?>
-            <p style="text-align:left;">
-                <img src="uploads/avatars/<?php echo $userFields['avatar'] ?>" width="auto" height="100%" style="border:3px solid grey" > Welcome <?php echo $userFields['displayName'] ?>
-                <span style="float:right;"><a href="logout.php" class="btn btn-danger btn-xs" role="button" aria-pressed="true"><i class="fa fa-power-off"></i> Logout</a></span>
-            </p>
-        <?php
+            ?>
+                <p>Welcome, Guest. Please <button type="button" class="btn btn-success btn-sm" onclick="overlayOn('login')">Login</button> or <button type="button" class="btn btn-success btn-sm" onclick="overlayOn('register')">Register</button></p>
+            <?php
                 }
-            }
-        ?>
+                else
+                {
+                    $userFields = $webDB->getAllUserDataForAccount(Session::get('userid'));
+                    if (!empty($userFields))
+                    {
+            ?>
+                <p style="text-align:left;">
+                    <img src="uploads/avatars/<?php echo $userFields['avatar'] ?>" width="35px" height="35px" style="border:3px solid grey; vertical-align: middle;" > Welcome back, <?php echo $userFields['displayName'] ?>
+                    <span style="float:right;"><a href="logout.php" class="btn btn-danger btn-sm" role="button" aria-pressed="true"><i class="fa fa-power-off"></i> Logout</a></span>
+                </p>
+            <?php
+                    }
+                }
+            ?>
+            </div>
         </div>
     </div>
 </div>
@@ -149,27 +155,30 @@
 <!-- test stuff - remove me after use -->
 <div class="nav-holder">
     <div class="container">
-            <nav class="navbar navbar-default">
-              <div class="container-fluid">
+         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="home">AEweb</a>
 
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="home">Home</a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <ul class="nav navbar-nav navbar-right">
-                    <li><a href="test">Test</a></li>
-                    <li><a href="test2">Test2</a></li>
-                  </ul>
-                </div>
-              </div>
-            </nav>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <li class="nav-item active">
+                <a class="nav-link" href="home">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="test">Test</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="test2">Test2</a>
+              </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </div>
+        </nav>
     </div>
 </div> 
     
