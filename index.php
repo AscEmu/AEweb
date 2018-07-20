@@ -96,12 +96,21 @@
 			}
 		}
 	}
+
+    include_once 'configs/web.conf.php';
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Simple Register</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta charset="<?php echo Config\Meta::charset ?>">
+<meta name="description" content="<?php echo Config\Meta::description ?>">
+<meta name="keywords" content="<?php echo Config\Meta::keywords ?>">
+<meta name="author" content="<?php echo Config\Meta::author ?>">
+<meta name="viewport" content="<?php echo Config\Meta::viewport ?>">
+    
+<title><?php echo Config\Info::siteName ?></title>
+    
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" href="css/style.css" type="text/css" />
 <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
