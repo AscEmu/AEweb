@@ -6,4 +6,7 @@
     // set variable equal to which random filename was chosen
     $selectedBg = "$bg[$i]";
 ?>
-<style type="text/css"> body{ background: url(images/<?php echo $selectedBg; ?>) no-repeat; } </style>
+<style type="text/css"> body{ background: url(images/<?php echo $selectedBg; ?>) no-repeat fixed;
+    background-size: cover
+    }
+</style>
