@@ -1,13 +1,8 @@
-<?php include 'content/header.cont.php'; ?>
-    
-<div class="container main">
-    <div class="col-md-12">
-        <h2>Welcome to this page!</h2>
-    </div>
+<?php
 
-    <div class="col-md-12">
-        Some Content...
-    </div>
-</div>
+$pageName = isset($_GET['page']) ? $_GET['page'] : 'home';
 
-<?php include 'content/footer.cont.php'; ?>
+include_once 'pages/'.$pageName.'.page.php';
+
+?>
+
