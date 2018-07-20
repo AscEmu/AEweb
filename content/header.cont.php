@@ -157,11 +157,13 @@
 </div>
     
 <!-- test stuff - remove me after use -->
-<div class="container" style="margin-top:40px">
+<div class="container" style="margin-top:60px">
     <div class="col-md-12">
         <!-- some buttons -->
-        <a href="index.php?page=test" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Test</a>
-        <a href="index.php?page=test2" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Test2</a>
-        <a href="index.php?page=home" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Home</a>
+        <div class="btn-group">
+        <a href="test" class="btn btn-primary" role="button" aria-pressed="true">Test</a>
+        <a href="test2" class="btn btn-primary" role="button" aria-pressed="true">Test2</a>
+        <a href="home" class="btn btn-primary" role="button" aria-pressed="true">Home</a>
+        </div>
     </div>
 </div>  
