@@ -147,13 +147,13 @@
 <div class="container main">
     <div class="col-md-12">
         <!-- print error if set -->
-        <?php include 'content/errorForm.content.php';?>
+        <?php include 'content/formErrors.cont.php';?>
         
         <h2>Welcome to this page!</h2>
     </div>
     <!-- load forms -->
-    <?php include 'content/loginForm.content.php';?>
-    <?php include 'content/registerForm.content.php';?>
+    <?php include 'content/formLogin.cont.php';?>
+    <?php include 'content/formRegister.cont.php';?>
     
     <div class="col-md-12">
         Some Content...
