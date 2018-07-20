@@ -18,7 +18,7 @@ user bar
     width: 100%;
     height: 40px;
     line-height: 40px;
-    z-index: 500;
+    z-index: 100;
 }
 
 .user-bar a
@@ -47,8 +47,8 @@ overlay
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.5);
-    z-index: 2;
     cursor: pointer;
+    z-index: 200;
 }
 
 #login
@@ -72,8 +72,8 @@ overlay
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.5);
-    z-index: 2;
     cursor: pointer;
+    z-index: 200;
 }
 
 #register
