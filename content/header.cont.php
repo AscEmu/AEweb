@@ -119,34 +119,37 @@
 <body>
 
 <div class="user-bar">
-    <div class="container">
-    <?php
-        if (!Session::get('userid'))
-        {
-    ?>
-        Welcome, Guest. Please <button type="button" class="btn btn-success btn-xs" onclick="overlayOn('login')">Login</button> or <button type="button" class="btn btn-success btn-xs" onclick="overlayOn('register')">Register</button>
-    <?php
-        }
-        else
-        {
-            $userFields = $webDB->getAllUserDataForAccount(Session::get('userid'));
-            if (!empty($userFields))
+    <div class="col-md-12">
+        <div class="container">
+        <?php
+            if (!Session::get('userid'))
             {
-    ?>
-        <p style="text-align:left;">
-            <img src="uploads/avatars/<?php echo $userFields['avatar'] ?>" width="auto" height="100%" style="border:3px solid grey" > Welcome <?php echo $userFields['displayName'] ?>
-            <span style="float:right;"><a href="logout.php" class="btn btn-danger btn-xs" role="button" aria-pressed="true"><i class="fa fa-power-off"></i> Logout</a></span>
-        </p>
-    <?php
+        ?>
+            Welcome, Guest. Please <button type="button" class="btn btn-success btn-xs" onclick="overlayOn('login')">Login</button> or <button type="button" class="btn btn-success btn-xs" onclick="overlayOn('register')">Register</button>
+        <?php
             }
-        }
-    ?>
+            else
+            {
+                $userFields = $webDB->getAllUserDataForAccount(Session::get('userid'));
+                if (!empty($userFields))
+                {
+        ?>
+            <p style="text-align:left;">
+                <img src="uploads/avatars/<?php echo $userFields['avatar'] ?>" width="auto" height="100%" style="border:3px solid grey" > Welcome <?php echo $userFields['displayName'] ?>
+                <span style="float:right;"><a href="logout.php" class="btn btn-danger btn-xs" role="button" aria-pressed="true"><i class="fa fa-power-off"></i> Logout</a></span>
+            </p>
+        <?php
+                }
+            }
+        ?>
+        </div>
     </div>
 </div>
 
-<div class="container main">
+<div class="container">
     <div class="col-md-12">
         <?php include 'content/formErrors.cont.php'; ?>
         <?php include 'content/formLogin.cont.php'; ?>
         <?php include 'content/formRegister.cont.php'; ?>
     </div>
+</div>
