@@ -12,28 +12,28 @@
              <div class="form-group">
                 <div class="input-group">
                    <span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
-                   <input type="text" name="name" class="form-control" placeholder="Enter Account Name (used for login game)" maxlength="50" />
+                   <input type="text" name="name" class="form-control" placeholder="Account Name (used for login game)" maxlength="50" />
                 </div>
              </div>
                 
              <div class="form-group">
                 <div class="input-group">
                    <span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
-                   <input type="text" name="displayName" class="form-control" placeholder="Enter Display Name (shown on website)" maxlength="50" />
+                   <input type="text" name="displayName" class="form-control" placeholder="Display Name (shown on website)" maxlength="50" />
                 </div>
              </div>
                 
              <div class="form-group">
                 <div class="input-group">
                    <span class="input-group-addon"><span class="fa fa-envelope" aria-hidden="true"></span></span>
-                   <input type="email" name="email" class="form-control" placeholder="Enter Your Email" maxlength="40" />
+                   <input type="email" name="email" class="form-control" placeholder="Your Email" maxlength="40" />
                 </div>
                 
              </div>
              <div class="form-group">
                 <div class="input-group">
                    <span class="input-group-addon"><span class="fa fa-key" aria-hidden="true"></span></span>
-                   <input type="password" name="pass" class="form-control" placeholder="Enter Password" maxlength="15" />
+                   <input type="password" name="pass" class="form-control" placeholder="Password" maxlength="15" />
                 </div>
                 
              </div>
@@ -48,6 +48,6 @@
              </div>
           </form>
             </div>
-            If you already have an account, please <button type="button" class="btn btn-success btn-xs" onclick="overlayOff('register');overlayOn('login')">Login</button>
+            If you already have an account, please <button type="button" class="btn btn-success btn-sm" onclick="overlayOff('register');overlayOn('login')">Login</button>
         </div>
     </div>

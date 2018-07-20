@@ -23,7 +23,13 @@ user bar
 
 .user-bar p
 {
-    font-size: 9pt;
+    font-size: 10pt;
+}
+
+.user-bar .btn-sm
+{
+    line-height: 0.7;
+    font-size: 10pt;
 }
 
 .main
@@ -118,6 +124,16 @@ overlay
     color: white;
     transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
+}
+
+/*
+forms
+*/
+
+form .fa
+{
+    line-height: 25pt;
+    padding-right: 10px;
 }
 
 /*

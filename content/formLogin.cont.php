@@ -12,14 +12,14 @@
              <div class="form-group">
                 <div class="input-group">
                    <span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
-                   <input type="text" name="userName" class="form-control" placeholder="Enter Name" maxlength="50" />
+                   <input type="text" name="userName" class="form-control" placeholder="Name" maxlength="50" />
                 </div>
                 
              </div>
              <div class="form-group">
                 <div class="input-group">
                    <span class="input-group-addon"><span class="fa fa-key" aria-hidden="true"></span></span>
-                   <input type="password" name="userPass" class="form-control" placeholder="Enter Password" maxlength="15" />
+                   <input type="password" name="userPass" class="form-control" placeholder="Password" maxlength="15" />
                 </div>
                 
              </div>
@@ -34,6 +34,6 @@
              </div>
           </form>
         </div>
-            If you need an account, please <button type="button" class="btn btn-success btn-xs" onclick="overlayOff('login');overlayOn('register')()">Register</button>
+            If you need an account, please <button type="button" class="btn btn-success btn-sm" onclick="overlayOff('login');overlayOn('register')()">Register</button>
         </div>
     </div>
