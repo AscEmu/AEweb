@@ -145,9 +145,34 @@
         </div>
     </div>
 </div>
-    
-    
 
+<!-- test stuff - remove me after use -->
+<div class="nav-holder">
+    <div class="container">
+            <nav class="navbar navbar-default">
+              <div class="container-fluid">
+
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="home">Home</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="test">Test</a></li>
+                    <li><a href="test2">Test2</a></li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+    </div>
+</div> 
+    
 <div class="container">
     <div class="col-md-12">
         <?php include 'content/formErrors.cont.php'; ?>
@@ -155,15 +180,3 @@
         <?php include 'content/formRegister.cont.php'; ?>
     </div>
 </div>
-    
-<!-- test stuff - remove me after use -->
-<div class="container" style="margin-top:60px">
-    <div class="col-md-12">
-        <!-- some buttons -->
-        <div class="btn-group">
-        <a href="test" class="btn btn-primary" role="button" aria-pressed="true">Test</a>
-        <a href="test2" class="btn btn-primary" role="button" aria-pressed="true">Test2</a>
-        <a href="home" class="btn btn-primary" role="button" aria-pressed="true">Home</a>
-        </div>
-    </div>
-</div>  

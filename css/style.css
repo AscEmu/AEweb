@@ -34,6 +34,25 @@ user bar
 }
 
 /*
+nav-holder
+*/
+.nav-holder
+{
+    margin-top: 40px;
+    background-color: #fff;
+}
+
+.navbar
+{
+    margin-bottom: 0;
+}
+.navbar-default
+{
+    border: none;
+    background-color: #fff;
+}
+
+/*
 overlay
 */
 #overlay-login
