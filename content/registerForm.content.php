@@ -12,10 +12,17 @@
              <div class="form-group">
                 <div class="input-group">
                    <span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
-                   <input type="text" name="name" class="form-control" placeholder="Enter Name" maxlength="50" />
+                   <input type="text" name="name" class="form-control" placeholder="Enter Account Name (used for login game)" maxlength="50" />
                 </div>
-                
              </div>
+                
+             <div class="form-group">
+                <div class="input-group">
+                   <span class="input-group-addon"><span class="fa fa-user" aria-hidden="true"></span></span>
+                   <input type="text" name="displayName" class="form-control" placeholder="Enter Display Name (shown on website)" maxlength="50" />
+                </div>
+             </div>
+                
              <div class="form-group">
                 <div class="input-group">
                    <span class="input-group-addon"><span class="fa fa-envelope" aria-hidden="true"></span></span>

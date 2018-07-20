@@ -150,4 +150,10 @@ class AccountDB extends Database
         $value = $result->fetch_assoc();
         return $value['id'];
     }
+    
+    function deleteAccountById($id)
+    {
+        $query = "DELETE FROM accounts WHERE id = '$id'";
+        return mysqli_query($this->connection, $query);
+    }
 }

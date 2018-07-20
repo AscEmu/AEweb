@@ -43,6 +43,7 @@
     $pass = "";
     
     $nameError = "";
+    $displayName = "";
     $emailError = "";
     $passError = "";
 
@@ -53,10 +54,17 @@
 	if (isset($_POST['btn-signup']))
 	{
 		$name = $_POST['name'];
+        $displayName = $_POST['displayName'];
 		$email = $_POST['email'];
 		$pass = $_POST['pass'];
 		
         $nameError = $accDB->checkName($name, true);
+        if ($displayName == $name)
+            $nameError = "The Display Name can not be the same as your account name!";
+        
+        if (empty($displayName))
+            $nameError = "The have to choose a Display Name!";
+        
         $emailError = $accDB->checkEMail($email);
 		$passError = $accDB->checkPassword($pass);
         
@@ -68,10 +76,23 @@
             $res = $accDB->createNewAccount($name, $pass, $email);
 			if ($res)
 			{
-                $errMSG = "Successfully registered, you may login now";
-				unset($name);
-				unset($email);
-				unset($pass);
+                $id = $accDB->getIdForAccountName($name);
+                $res2 = $webDB->createWebData($id, $displayName);
+                if ($res2)
+                {
+                    $errMSG = "Successfully registered, you may login now";
+				    unset($name);
+				    unset($email);
+				    unset($pass);
+                    unset($displayName);
+                }
+                else
+                {
+                    $hasRegisterError = true;
+                    $errMSG = "The account was not created due to web database issues!";
+                    //fall back if web user creation fails
+                    $accDB->deleteAccountById($id);
+                }
 			}
 		}
 	}

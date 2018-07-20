@@ -23,6 +23,8 @@
             <div class="alert alert-danger">
                 <span class="fa fa-info" aria-hidden="true"></span>
                 <?php 
+                    echo $errMSG;
+                    echo isset($nameError) ? '<br>' : "";
                     echo $nameError;
                     echo isset($emailError) ? '<br>' : "";
                     echo $emailError;
