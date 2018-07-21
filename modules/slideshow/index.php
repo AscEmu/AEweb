@@ -75,9 +75,6 @@
 
 .slide-container .caption-container {
   text-align: center;
-  background-color: #222;
-  padding: 2px 16px;
-  color: white;
   <?php if (!Config\SlideShow::showCaption) { ?>
   display: none;
   <?php } ?>

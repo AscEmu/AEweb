@@ -141,7 +141,10 @@
             ?>
                 <p style="text-align:left;">
                     <img src="uploads/avatars/<?php echo $userFields['avatar'] ?>" width="35px" height="35px" style="border:3px solid grey; vertical-align: middle;" > Welcome back, <?php echo $userFields['displayName'] ?>
-                    <span style="float:right;"><a href="logout.php" class="btn btn-danger btn-sm" role="button" aria-pressed="true"><i class="fa fa-power-off"></i> Logout</a></span>
+                    <span style="float:right;">
+                            <a href="acp" class="btn btn-info btn-sm" role="button" aria-pressed="true"><i class="fas fa-cogs"></i> Account Panel</a>
+                            <a href="logout.php" class="btn btn-danger btn-sm" role="button" aria-pressed="true"><i class="fa fa-power-off"></i> Logout</a>
+                    </span>
                 </p>
             <?php
                     }
