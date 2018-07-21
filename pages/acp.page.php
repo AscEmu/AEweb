@@ -7,14 +7,39 @@
 <div class="main">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
-                <img src="uploads/avatars/<?php echo $userFields['avatar'] ?>" width="150px" height="150px" style="border:3px solid grey; vertical-align: middle;" >
-                <p>Displayed Name: <?php echo $userFields['displayName'] ?></p>
-                <p>Join Date: <?php $date=date_create($accountFields['joindate']); echo date_format($date,"Y/m/d H:i:s");  ?></p>
-                <p>Account Name: <?php echo $accountFields['acc_name'] ?></p>
-                <p>Last Login: <?php $date=date_create($accountFields['lastlogin']); echo date_format($date,"Y/m/d H:i:s"); ?></p>
-                <p>E-Mail: <?php echo $accountFields['email'] ?></p>
-                <p>Account Flags: <?php echo $accountFields['flags'] ?></p>
+            <div class="col-lg-2">
+                <img class="image-lg-right" src="uploads/avatars/<?php echo $userFields['avatar'] ?>" width="150px" height="150px" style="border:3px solid grey; vertical-align: middle;" >
+            </div>
+            <div class="col-md-6">
+                <table width="100%">
+                    <tbody>
+                        <tr>
+                            <td>Displayed Name</td>
+                            <td><?php echo $userFields['displayName'] ?></td>
+                        </tr>
+                        <tr>
+                            <td>Join Date</td>
+                            <td><?php $date=date_create($accountFields['joindate']); echo date_format($date,"Y/m/d H:i:s"); ?></td>
+                        </tr>
+                        <tr>
+                            <td>Account Name</td>
+                            <td><?php echo $accountFields['acc_name'] ?></td>
+                        </tr>
+                        <tr>
+                            <td>Last Login</td>
+                            <td><?php $date=date_create($accountFields['lastlogin']); echo date_format($date,"Y/m/d H:i:s"); ?></td>
+                        </tr>
+                        <tr>
+                            <td>E-Mail</td>
+                            <td><?php echo $accountFields['email'] ?></td>
+                        </tr>
+                        <tr>
+                            <td>Account Flags</td>
+                            <td><?php echo $accountFields['flags'] ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr>
             </div>
             <div class="col-md-4">
                 <p>Add info edit options here!</p>
