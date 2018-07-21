@@ -49,8 +49,14 @@ user bar
 
 .main
 {
-    margin-top: 40px;
+    padding: 35px 0;
     z-index: 1;
+    background-color: #262626;
+}
+
+.basic-padding
+{
+    padding: 25px 0;
 }
 
 /*
@@ -159,6 +165,7 @@ footer
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #000;
-    color: #fff;
+    background-color: #0D0D0D;
+    color: #DCDCDC;
+    padding: 35px 0;
 }
