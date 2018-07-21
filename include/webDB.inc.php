@@ -10,6 +10,12 @@ class WebDB extends Database
     }
     
     // class functions
+    function runQuery($query)
+    {
+        $result = mysqli_query($this->connection, $query);
+        return $result;
+    }
+    
     function escapeString($string)
     {
         return mysqli_real_escape_string($this->connection, $string);

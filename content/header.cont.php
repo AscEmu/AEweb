@@ -1,7 +1,6 @@
 <?php
 	ob_start();
     session_start();
-	include_once 'background.php';
     include_once 'include/database.inc.php';
     include_once 'include/accountDB.inc.php';
     include_once 'include/session.inc.php';
@@ -176,7 +175,7 @@
             </ul>
             <form class="form-inline my-2 my-lg-0">
               <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search" style="line-height: 1.5;"></i></button>
             </form>
           </div>
         </nav>
