@@ -156,4 +156,13 @@ class AccountDB extends Database
         $query = "DELETE FROM accounts WHERE id = '$id'";
         return mysqli_query($this->connection, $query);
     }
+    
+    // data
+    function getAllAccountDataForAccount($id)
+    {
+        $query = "SELECT * FROM accounts WHERE id = '$id'";
+        $result = mysqli_query($this->connection, $query);			
+        $results = $result->fetch_assoc();
+        return $results;
+    }
 }

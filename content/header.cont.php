@@ -136,6 +136,7 @@
                 else
                 {
                     $userFields = $webDB->getAllUserDataForAccount(Session::get('userid'));
+                    $accountFields = $accDB->getAllAccountDataForAccount(Session::get('userid'));
                     if (!empty($userFields))
                     {
             ?>
