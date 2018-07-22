@@ -21,16 +21,17 @@ ul.status {
 
 li.status-online {
   display: block;
-  width: 100%;
   height: auto;
-  margin-right: 10px;
-  text-align: center;
+  text-align: right;
+  padding-right:20px;
   font-size: 9pt;
+  color: #dbdbdb;
+  border-radius: 20px;
 }
 
 li.status-online:nth-child(1) {
-  -webkit-animation: pulse-online 1s alternate infinite;
-  -moz-animation: pulse-online 1s alternate infinite;
+  -webkit-animation: pulse-online 2s alternate infinite;
+  -moz-animation: pulse-online 2s alternate infinite;
 }
 
 @-webkit-keyframes pulse-online {
@@ -61,16 +62,17 @@ li.status-online:nth-child(1) {
   
 li.status-offline {
   display: block;
-  width: 100%;
   height: auto;
-  margin-right: 10px;
-  text-align: center;
+  text-align: right;
+  padding-right:20px;
   font-size: 9pt;
+  color: #dbdbdb;
+  border-radius: 20px;
 }
 
 li.status-offline:nth-child(1) {
-  -webkit-animation: pulse-offline 1s alternate infinite;
-  -moz-animation: pulse-offline 1s alternate infinite;
+  -webkit-animation: pulse-offline 2s alternate infinite;
+  -moz-animation: pulse-offline 2s alternate infinite;
 }
 
 @-webkit-keyframes pulse-offline {
@@ -159,11 +161,11 @@ li.status-offline:nth-child(1) {
                 // echo day, hour, minutes
                 if ($result['status'])
                     echo '<ul class="status">
-                            <li class="status-online">Online since '. $diff->format($format).'</li>
+                            <li class="status-online">Online '. $diff->format($format).'</li>
                           </ul>';
                 else
                     echo '<ul class="status">
-                            <li class="status-offline">Offline since '. $diff->format($format).'</li>
+                            <li class="status-offline">Offline '. $diff->format($format).'</li>
                           </ul>';
             }
             else
