@@ -5,19 +5,26 @@
 
 .realms-container
 {
-    background-color: #000;
+}
+
+.realms-container .realm
+{
+    background-color: #111111;
+    padding: 10px 15px;
+    margin-bottom: 10px;
 }
 
 </style>
 
 <div class="realms-container">
 <?php
-    $realmDB;
+    $realmStatus;
                     
     foreach (Config\Realm::$realms as $id=>$info)
     {
-        $realmDB[$id] = new RealmStatus($info["dbhost"], $info["dbuser"], $info["dbpass"], $info["dbname"]);
-        if (!$realmDB[$id])
+        echo '<div class="realm">';
+        $realmStatus[$id] = new RealmStatus($id, $info["dbhost"], $info["dbuser"], $info["dbpass"], $info["dbname"], $info["realmadress"], $info["realmport"]);
+        if (!$realmStatus[$id])
         {
             echo 'Can\'t connect to realm db. Check out your realms.conf.php settings';
         }
@@ -27,9 +34,10 @@
             echo '<h6>'.$info["name"].'</h6>';
             echo ''.$info["description"].'<br>';
             echo 'Version: '.$info["version"].' - Flags: '.$info["flags"].'<br>';
-            echo '<p>'.$realmDB[$id]->getCharacterCount().' Players</p>';
+            echo '<p>'.$realmStatus[$id]->getCharacterCount().' Players</p>';
             echo '</div>';
         }
+        echo '</div>';
     }
                 
 ?>
