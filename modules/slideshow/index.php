@@ -74,12 +74,26 @@
 }
 
 .slide-container .caption-container {
-  text-align: center;
-  height: 24px;
-  background-color: #121212;
+    text-align: right;
+    background-color: #121212;
+    margin-top: -50px;
+    padding: 5px 20px;
+    font-size: 10pt;
   <?php if (!Config\SlideShow::showCaption) { ?>
   display: none;
   <?php } ?>
+}
+
+.caption-container p {
+    margin: 0;
+}
+    
+.caption-container #caption {
+    font-weight: 600;
+}
+    
+.caption-container #author {
+    color: #CFCFCF;
 }
 
 .slide-container .slides-row {
@@ -112,7 +126,7 @@
 <div class="slide-container">
 <?php
 // load data from db
-$query = "SELECT sort, imageName, caption FROM mod_slideshow ORDER BY sort ASC";
+$query = "SELECT sort, imageName, caption, author FROM mod_slideshow ORDER BY sort ASC";
 $result = $webDB->runQuery($query);
 
 if (!$result)
@@ -134,13 +148,14 @@ while ($row = mysqli_fetch_array($result))
 
   <div class="caption-container">
     <p id="caption"></p>
+    <p id="author"></p>
   </div>
   
   <div class="slides-row">
 <?php
 
 // load data from db
-$query = "SELECT sort, imageName, caption FROM mod_slideshow ORDER BY sort ASC";
+$query = "SELECT sort, imageName, caption, author FROM mod_slideshow ORDER BY sort ASC";
 $result = $webDB->runQuery($query);
 
 if (!$result)
@@ -151,6 +166,7 @@ while ($row = mysqli_fetch_array($result))
 {
     echo '<div class="column">';
     echo '<img class="thumbs cursor" src="images/'.$row["imageName"].'" style="width:100%" onclick="currentSlide('.$count.')" alt="'.$row["caption"].'">';
+    echo '<div class="slideAuthor" id="'.$row["author"].'">'.$row["author"].'</div>';
     echo '</div>';
     
     ++$count;
@@ -184,6 +200,8 @@ function showSlides(n) {
   var slides = document.getElementsByClassName("imageSlide");
   var dots = document.getElementsByClassName("thumbs");
   var captionText = document.getElementById("caption");
+  var auText = document.getElementsByClassName("slideAuthor");
+  var authorText = document.getElementById("author");
   
   if (n != null)
   {
@@ -210,6 +228,7 @@ function showSlides(n) {
   slides[slideIndex-1].style.display = "block";
   dots[slideIndex-1].className += " active";
   captionText.innerHTML = dots[slideIndex-1].alt;
+  authorText.innerHTML = auText[slideIndex-1].id;
   timer = setTimeout(showSlides, timeInMs);
 }
 </script>
