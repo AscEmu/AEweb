@@ -26,17 +26,7 @@
                 <h3>News stuff</h3>
             </div>
             <div class="col-md-4">
-                <?php
-                    foreach (Config\Realm::$realms as $id=>$info)
-                    {
-                        echo '<div class="realms">';
-                        echo '<h6>'.$info["name"].'</h6>';
-                        echo ''.$info["description"].'<br>';
-                        echo ''.$info["version"].' - '.$info["flags"].'<br>';
-                        echo '</div><hr>';
-                    }
-                
-                ?>
+                <?php include 'modules/realmstatus/index.php'; ?>
             </div>
         </div>
     </div>

@@ -30,4 +30,15 @@ class Database
         $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
         return $conn;
     }
+    
+    protected function connectToCharacterDB($dbhost, $dbuser, $dbpass, $dbname)
+    {
+        $this->servername = $dbhost;
+        $this->username = $dbuser;
+        $this->password = $dbpass;
+        $this->dbname = $dbname;
+        
+        $conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+        return $conn;
+    }
 }
