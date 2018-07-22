@@ -166,7 +166,7 @@ while ($row = mysqli_fetch_array($result))
 {
     echo '<div class="column">';
     echo '<img class="thumbs cursor" src="images/'.$row["imageName"].'" style="width:100%" onclick="currentSlide('.$count.')" alt="'.$row["caption"].'">';
-    echo '<div class="slideAuthor" id="'.$row["author"].'">'.$row["author"].'</div>';
+    echo '<div class="slideAuthor" id="'.$row["author"].'"></div>';
     echo '</div>';
     
     ++$count;
