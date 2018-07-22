@@ -30,9 +30,9 @@
                     foreach (Config\Realm::$realms as $id=>$info)
                     {
                         echo '<div class="realms">';
-                        echo '<h6>'.$info["Name"].'</h6>';
-                        echo ''.$info["Description"].'<br>';
-                        echo ''.$info["Version"].' - '.$info["Flags"].'<br>';
+                        echo '<h6>'.$info["name"].'</h6>';
+                        echo ''.$info["description"].'<br>';
+                        echo ''.$info["version"].' - '.$info["flags"].'<br>';
                         echo '</div><hr>';
                     }
                 

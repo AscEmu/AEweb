@@ -7,18 +7,34 @@ namespace Config
     {
         static public $realms = [
             1 => [
-                "ID" => 1,
-                "Name" => "UberRealm XXX",
-                "Description" => "Something unique - 100K online playerz!",
-                "Version" => "3.3.5a",
-                "Flags" => 24
+                "dbhost" => "localhost",
+                "dbuser" => "root",
+                "dbpass" => "root",
+                "dbname" => "asc_char",
+                
+                "realmadress" => "127.0.0.1",
+                "realmport" => "8129",
+                
+                "id" => 1,
+                "name" => "UberRealm XXX",
+                "description" => "Something unique - 100K online playerz!",
+                "version" => "3.3.5a",
+                "flags" => 24
             ],
             2 => [
-                "ID" => 2,
-                "Name" => "BCRealm YYY",
-                "Description" => "Back to the roots",
-                "Version" => "2.4.3",
-                "Flags" => 8
+                "dbhost" => "localhost",
+                "dbuser" => "root",
+                "dbpass" => "root",
+                "dbname" => "asc_char",
+                
+                "realmadress" => "127.0.0.1",
+                "realmport" => "8130",
+                
+                "id" => 2,
+                "name" => "BCRealm YYY",
+                "description" => "Back to the roots",
+                "version" => "2.4.3",
+                "flags" => 8
             ]
         ];
     }
