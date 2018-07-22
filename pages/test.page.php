@@ -4,9 +4,13 @@
 
 <?php include 'content/header.cont.php'; ?>
 
-<div class="container main">
-    <div class="col-md-12">
-        <h2>Test</h2>
+<div class="basic-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Test</h2>
+            </div>
+        </div>
     </div>
 </div>
 
