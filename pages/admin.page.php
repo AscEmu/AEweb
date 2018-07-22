@@ -10,7 +10,7 @@
             <div class="col-lg-12">
                 <h2>Admin Panel</h2>
                 <hr>
-                <p>Really important stuff here. Throw some graphs at the top (everyone loves graphs). Mr. Poo is now living here until the awsome graphs arrives.</p>
+                <p>Really important stuff here. Throw some graphs at the top (everyone loves graphs). Mr. Poo is now living here until the awesome graphs arrives.</p>
                 <h1 align="center"><i class="fas fa-poo"></i></h1>
             </div>
         </div>

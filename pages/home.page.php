@@ -11,7 +11,10 @@
                 <?php include 'modules/slideshow/index.php'; ?>
             </div>
             <div class="col-md-4">
-                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                <h3>Welcome to AEweb</h3>
+                <p>AEweb is a PHP frontend server management Website. It is and probably will be the only web-project for AscEmu servers. This project was build from scratch without deal breaking requirements.</p>
+                <p>We try to build well known functionality into this project to give AscEmu users a similar good experience on the web related site as with other projects.</p>
+                <p>If you have some time on your hands, join the fun and influence the development with your skills and knowledge.</p>
             </div>
         </div>
     </div>
