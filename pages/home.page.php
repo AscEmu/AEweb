@@ -22,8 +22,21 @@
 <div class="basic-padding">
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                Some Content...
+            <div class="col-lg-8">
+                <h3>News stuff</h3>
+            </div>
+            <div class="col-md-4">
+                <?php
+                    foreach (Config\Realm::$realms as $id=>$info)
+                    {
+                        echo '<div class="realms">';
+                        echo '<h6>'.$info["Name"].'</h6>';
+                        echo ''.$info["Description"].'<br>';
+                        echo ''.$info["Version"].' - '.$info["Flags"].'<br>';
+                        echo '</div><hr>';
+                    }
+                
+                ?>
             </div>
         </div>
     </div>
