@@ -165,4 +165,12 @@ class AccountDB extends Database
         $results = $result->fetch_assoc();
         return $results;
     }
+    
+    function getRealmDataForId($id)
+    {
+        $query = "SELECT * FROM realms WHERE id = '$id'";
+        $result = mysqli_query($this->connection, $query);
+        $results = $result->fetch_assoc();
+        return $results;
+    }
 }
