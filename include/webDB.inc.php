@@ -36,4 +36,12 @@ class WebDB extends Database
         $query = "INSERT INTO users(id, displayName, avatar) VALUES($id, '$displayName', 'default.jpg')";
         return mysqli_query($this->connection, $query);
     }
+    
+    // news
+    function getAllNewsFromDB()
+    {
+        $query = "SELECT id, userId, time, text image FROM news";
+        $result = mysqli_query($this->connection, $query);			
+        return $result;
+    }
 }

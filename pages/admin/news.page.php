@@ -1,17 +1,33 @@
-<?php
-
-?>
 
 <?php include 'content/header.cont.php'; ?>
+
+<?php
+$news = $webDB->getAllNewsFromDB();
+while($row = $news->fetch_array())
+{
+   $rows[] = $row;
+}
+
+?>
 
 <div class="main">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h2>Latest News</h2>
+                <h2><i class="far fa-newspaper"></i> Latest News</h2>
                 <hr>
                 <p>List the latest news inside a sortable table here... but, guess what... instead Mr. Poo is living here.</p>
                 <h1 align="center"><i class="fas fa-poo"></i></h1>
+                <?php
+                    foreach($rows as $row)
+                    {
+                        echo $row["id"];
+                        echo $row["userId"];
+                        echo $row["time"];
+                        echo isset($row["text"]) ? $row["text"] : "";
+                        echo $row["image"];
+                    }
+                ?>
             </div>
         </div>
     </div>
