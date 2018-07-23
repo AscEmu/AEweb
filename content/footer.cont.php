@@ -15,7 +15,13 @@
         <div class="row">
     </div>
 </footer>
-    
+<script>
+var textarea = document.getElementById('text');
+sceditor.create(textarea, {
+	format: 'xhtml',
+	style: 'include/sceditor-2.1.3/minified/themes/content/default.min.css'
+});
+</script>
 <script>
 
 function overlayOn(name) {

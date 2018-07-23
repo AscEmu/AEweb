@@ -23,7 +23,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <h3>News stuff</h3>
+                <h2>News </h2>
             </div>
             <div class="col-lg-4">
                 <?php include 'modules/realmstatus/index.php'; ?>
