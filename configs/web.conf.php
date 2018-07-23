@@ -6,7 +6,7 @@ namespace Config
     class Hosting
     {
         const rootPath = "";
-        const baseURL = "";
+        const baseURL = "http://127.0.0.1/";
     }
     
     class Info

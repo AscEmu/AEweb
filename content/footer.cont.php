@@ -19,7 +19,7 @@
 var textarea = document.getElementById('text');
 sceditor.create(textarea, {
 	format: 'xhtml',
-	style: 'include/sceditor-2.1.3/minified/themes/content/default.min.css'
+	style: '<?php echo Config\Hosting::baseURL ?>include/sceditor-2.1.3/minified/themes/content/default.min.css'
 });
 </script>
 <script>

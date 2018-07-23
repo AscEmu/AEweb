@@ -1,6 +1,9 @@
 <?php
 	ob_start();
     session_start();
+    
+    require_once 'configs/web.conf.php';
+    
     include_once 'include/database.inc.php';
     include_once 'include/accountDB.inc.php';
     include_once 'include/session.inc.php';
@@ -96,8 +99,6 @@
 			}
 		}
 	}
-
-    include_once 'configs/web.conf.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -115,22 +116,22 @@
     
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
     
-<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo Config\Hosting::baseURL ?>css/style.css" type="text/css" />
     
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
     
     <!-- Include the default theme -->
-<link rel="stylesheet" href="include/sceditor-2.1.3/minified/themes/default.min.css" />
+<link rel="stylesheet" href="<?php echo Config\Hosting::baseURL ?>include/sceditor-2.1.3/minified/themes/default.min.css" />
 
 <!-- Include the editors JS -->
-<script src="include/sceditor-2.1.3/minified/sceditor.min.js"></script>
+<script src="<?php echo Config\Hosting::baseURL ?>include/sceditor-2.1.3/minified/sceditor.min.js"></script>
 
 <!-- Include the BBCode or XHTML formats -->
-<script src="include/sceditor-2.1.3/minified/formats/bbcode.js"></script>
+<script src="<?php echo Config\Hosting::baseURL ?>include/sceditor-2.1.3/minified/formats/bbcode.js"></script>
     
-<link rel="stylesheet" href="css/editor.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo Config\Hosting::baseURL ?>css/editor.css" type="text/css" />
 </head>
 <body>
 
@@ -153,7 +154,7 @@
                     {
             ?>
                 <p style="text-align:left;">
-                    <img src="uploads/avatars/<?php echo $userFields['avatar'] ?>" width="35px" height="35px" style="border:3px solid grey; vertical-align: middle;" > Welcome back, <?php echo $userFields['displayName'] ?>
+                    <img src="<?php echo Config\Hosting::baseURL ?>uploads/avatars/<?php echo $userFields['avatar'] ?>" width="35px" height="35px" style="border:3px solid grey; vertical-align: middle;" > Welcome back, <?php echo $userFields['displayName'] ?>
                     <span style="float:right;">
                         <a href="admin" class="btn btn-dark btn-sm" role="button" aria-pressed="true"><i class="fas fa-hand-spock"></i> Admin Panel</a>
                         <a href="acp" class="btn btn-info btn-sm" role="button" aria-pressed="true"><i class="fas fa-cogs"></i> Account Panel</a>
