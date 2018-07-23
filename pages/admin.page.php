@@ -19,22 +19,30 @@
 <div class="basic-padding">
     <div class="container">
         <div class="row">
-            <div class="col-5">
+            <div class="col-md-5">
                 <h2>Write some news</h2>
                 <p>Let people know what is going on right now. Your Text will appear on the frontpage!</p>
                 <p>You should avoid any coloring and sizing since it gets overwritten with the default style of the page.</p>
                 <p>Feel free to add a picture to your message. It will appear in the default news image area on the home page.</p>
             </div>
-            <div class="col-7">
+            <div class="col-md-7">
                 <h2> News</h2>
-                <form style="max-width:100%">
-                    <div style="width:100%; display:table; padding: 10px 3px;">
-                        <label for="titel" style="display:table-cell;">Titel</label>
-                        <input name="titel" id="titel" type="text" style="display:table-cell; width:100%">
+                <form>
+                    <input type="hidden" iname="actionType" value="1">
+                    <input type="hidden" name="userId" value="<?php echo Session::get('userid') ?>">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="titel" placeholder="Titel">
                     </div>
-                    <textarea id="text" name="message" rows="15" cols="100%"></textarea>
-                    <hr>
-                    <input type="submit" value="Submit">
+                    <div class="form-group">
+                        <label for="upload">Upload lead image</label>
+                        <input type="file" class="form-control-file" id="upload">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" id="text" rows="15" placeholder="Message"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Post News</button>
+                    </div>
                 </form>
             </div>
         </div>
