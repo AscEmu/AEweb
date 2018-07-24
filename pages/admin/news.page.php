@@ -1,6 +1,7 @@
 
 <?php include 'content/header.cont.php'; ?>
 
+
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
@@ -30,7 +31,57 @@ if (isset($_POST['createNews']))
     }
 }
 
-// change news
+// load data in case of a change request
+if (isset($_POST['openEditForm']))
+{
+    $newsId = $_POST['id'];
+    
+    $newsQuery = $webDB->getNewsById($newsId);
+    if (!$newsQuery)
+    {
+        echo '<div class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <strong>Error!</strong> Tried to load news with id '.$newsId;
+        echo '    </div>';
+    }
+    else
+    {
+        echo '<div class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <strong>Success!</strong> News loaded.
+            </div>';
+    }
+    
+    while($row = $newsQuery->fetch_array())
+    {
+       $ChangeRows = $row;
+    }
+}
+
+// change news in admin/news page
+if (isset($_POST['editNews']))
+{
+    $userId = $_POST['userId'];
+    $title = $_POST['titelChange'];
+    $text = $_POST['textChange'];
+    $id = $_POST['id'];
+    
+    $newsQuery = $webDB->updateNewsInDB($userId, $title, $text, $id);
+    if (!$newsQuery)
+    {
+        echo '<div class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <strong>Error!</strong> News not updated in database.
+            </div>';
+    }
+    else
+    {
+        echo '<div class="alert alert-success alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <strong>Success!</strong> News updated in database.
+            </div>';
+    }
+}
 
 // delete news
 if (isset($_POST['deleteNews']))
@@ -63,6 +114,33 @@ while($row = $news->fetch_array())
 
 ?>
 
+<!-- hidden page form start -->
+    <div id="overlay-page" onclick="overlayOff('page')">
+        <div id="page">
+            <div id="page-form">
+            <form method="post" action="/admin/news" autocomplete="off">
+                <input type="hidden" name="actionType" value="2">
+                <input type="hidden" name="id" value="<?php echo isset($ChangeRows["id"]) ? $ChangeRows["id"] : 0; ?>">
+                    <input type="hidden" name="userId" value="<?php echo Session::get('userid') ?>">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="titelChange" name="titelChange" value="<?php echo isset($ChangeRows["title"]) ? $ChangeRows["title"] : ""; ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="uploadChange">Upload lead image</label>
+                        <input type="file" class="form-control-file" id="uploadChange">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" id="textChange" name="textChange" rows="15" ></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" name="editNews">Update News</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<!-- hidden page form ends -->
+
         </div>
     </div>
 </div>
@@ -86,6 +164,7 @@ while($row = $news->fetch_array())
                             <?php
                                 foreach($rows as $row)
                                 {
+                                    $pg = "'page'";
                                     $text = isset($row["text"]) ? $row["text"] : "";
                                     echo '<tr>';
                                     echo     '<td>'.$row["id"].'</td>';
@@ -97,6 +176,7 @@ while($row = $news->fetch_array())
                                                 <input type="hidden" name="id" value="'.$row["id"].'">
                                                 <div class="form-group">
                                                     <button type="submit" class="btn btn-danger btn-sm" name="deleteNews"><i class="far fa-trash-alt"></i></button>
+                                                    <button type="submit" class="btn btn-warning btn-sm" name="openEditForm"><i class="far fa-edit"></i></button>
                                                 </div>
                                             </form>';
                                     echo     '</td>';
@@ -149,4 +229,26 @@ $(document).ready(function() {
 } );
 </script>
 
+<script>
+var textarea2 = document.getElementById('textChange');
+sceditor.create(textarea2, {
+	format: 'xhtml',
+	style: '<?php echo Config\Hosting::baseURL ?>include/sceditor-2.1.3/minified/themes/content/default.min.css'
+});
+
+var instance = sceditor.instance(textarea2);
+instance.insert('<?php echo isset($ChangeRows["text"]) ? $ChangeRows["text"] : ""; ?>');
+</script>
+
 <?php include 'content/footer.cont.php'; ?>
+
+
+<?php
+// change news from start page
+if (isset($_POST['openEditForm']))
+{
+    echo 'openEditForm called';
+    $pg = "'page'";
+    echo '<script> overlayOn('.$pg.') </script>';
+}
+?>

@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-2">
-                <img class="image-lg-right" src="uploads/avatars/<?php echo $userFields['avatar'] ?>" width="150px" height="150px" style="border:3px solid grey; vertical-align: middle;" >
+                <img class="image-lg-right" src="<?php echo Config\Hosting::baseURL ?>uploads/avatars/<?php echo $userFields['avatar'] ?>" width="150px" height="150px" style="border:3px solid grey; vertical-align: middle;" >
             </div>
             <div class="col-md-6">
                 <table width="100%">
@@ -51,7 +51,6 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                Some Content...
             </div>
         </div>
     </div>

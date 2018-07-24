@@ -106,7 +106,7 @@ overlay
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.85);
     cursor: pointer;
     z-index: 200;
 }
@@ -131,12 +131,37 @@ overlay
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.85);
     cursor: pointer;
     z-index: 200;
 }
 
 #register
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+
+#overlay-page
+{
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.85);
+    cursor: pointer;
+    z-index: 200;
+}
+
+#page
 {
     position: absolute;
     top: 50%;

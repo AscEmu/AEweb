@@ -40,7 +40,7 @@ class WebDB extends Database
     // news
     function getAllNewsFromDB()
     {
-        $query = "SELECT id, userId, title, time, text, image FROM news";
+        $query = "SELECT id, userId, title, time, text, image FROM news ORDER BY id DESC";
         $result = mysqli_query($this->connection, $query);			
         return $result;
     }
@@ -52,9 +52,22 @@ class WebDB extends Database
         return mysqli_query($this->connection, $query);
     }
     
+    function updateNewsInDB($userId, $title, $text, $id)
+    {
+        $textForm = htmlspecialchars($text);
+        $query = "REPLACE INTO news(id, userId, title, time, text, image) VALUES($id, $userId, '$title', NOW(), '$textForm', '')";
+        return mysqli_query($this->connection, $query);
+    }
+    
     function deleteNewsById($id)
     {
         $query = "DELETE FROM news WHERE id = '$id'";
+        return mysqli_query($this->connection, $query);
+    }
+    
+    function getNewsById($id)
+    {
+        $query = "SELECT id, userId, title, time, text, image FROM news WHERE id = '$id'";
         return mysqli_query($this->connection, $query);
     }
 }

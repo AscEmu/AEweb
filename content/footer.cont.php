@@ -42,6 +42,12 @@ $(document).ready(function() {
     $('#login-form').click(function(e) {
         e.stopPropagation();
     });
+    
+    // this part is used for page forms e.g. change news.
+    // if you need a simple overlay on a page use div id page-form.
+    $('#page-form').click(function(e) {
+        e.stopPropagation();
+    });
 
 });
 </script>
