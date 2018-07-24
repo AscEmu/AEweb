@@ -40,8 +40,20 @@ class WebDB extends Database
     // news
     function getAllNewsFromDB()
     {
-        $query = "SELECT id, userId, time, text image FROM news";
+        $query = "SELECT id, userId, title, time, text, image FROM news";
         $result = mysqli_query($this->connection, $query);			
         return $result;
+    }
+    
+    function addNewsToDB($userId, $title, $text)
+    {
+        $query = "INSERT INTO news(userId, title, time, text, image) VALUES($userId, '$title', NOW(), '$text', '')";
+        return mysqli_query($this->connection, $query);
+    }
+    
+    function deleteNewsById($id)
+    {
+        $query = "DELETE FROM news WHERE id = '$id'";
+        return mysqli_query($this->connection, $query);
     }
 }
