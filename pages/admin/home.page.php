@@ -20,7 +20,6 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2>Admin Actions</h2>
                 <a href="/admin/news" class="btn btn-dark btn-lg" role="button"><i class="far fa-newspaper"></i> News Management</a>
             </div>
         </div>

@@ -47,7 +47,8 @@ class WebDB extends Database
     
     function addNewsToDB($userId, $title, $text)
     {
-        $query = "INSERT INTO news(userId, title, time, text, image) VALUES($userId, '$title', NOW(), '$text', '')";
+        $textForm = htmlspecialchars($text);
+        $query = "INSERT INTO news(userId, title, time, text, image) VALUES($userId, '$title', NOW(), '$textForm', '')";
         return mysqli_query($this->connection, $query);
     }
     
