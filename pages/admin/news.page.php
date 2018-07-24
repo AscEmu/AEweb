@@ -237,17 +237,17 @@ sceditor.create(textarea2, {
 });
 
 var instance = sceditor.instance(textarea2);
-instance.insert('<?php echo isset($ChangeRows["text"]) ? $ChangeRows["text"] : ""; ?>');
+instance.insert('<?php echo isset($ChangeRows["text"]) ? html_entity_decode($ChangeRows["text"]) : ""; ?>');
 </script>
 
 <?php include 'content/footer.cont.php'; ?>
 
 
 <?php
-// change news from start page
+// call overlay in case of opening edit form (this is at the end of the file since the form gets constructed at the beginning and set to be hidden)
 if (isset($_POST['openEditForm']))
 {
-    echo 'openEditForm called';
+    echo '';
     $pg = "'page'";
     echo '<script> overlayOn('.$pg.') </script>';
 }
