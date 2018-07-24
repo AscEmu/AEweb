@@ -1,6 +1,11 @@
 # AEweb
 Welcome to AEweb. If you want to contribute, feel free to create an issue or pullrequest.
 
+- [x] News creation
+- [x] News deletion
+
+
+
 ## Modules
 Some scripts will be released as seperated modules. These modules are located inside the modules dir.
 
