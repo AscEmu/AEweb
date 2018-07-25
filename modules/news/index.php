@@ -18,8 +18,7 @@
     foreach($rows as $row)
     {
         echo '<h2>'.$row["title"].'</h2>';
-        //todo get formatted time and username instead of id
-        echo $row["time"].' by '.$row["userId"].'<br>';
+        echo $row["time"].' by '.$webDB->getUserNameForId($row["userId"]).'<br>';
         echo html_entity_decode($row["text"]);
         //todo check for user rights instead of the userid!
         if (Session::get('userid'))

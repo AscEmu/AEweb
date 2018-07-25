@@ -51,6 +51,14 @@ class WebDB extends Database
         return mysqli_query($this->connection, $query);
     }
     
+    function getUserNameForId($id)
+    {
+        $query = "SELECT displayName FROM users WHERE id = '$id'";
+        $result = mysqli_query($this->connection, $query);
+        $userFields = $result->fetch_assoc();
+        return $userFields['displayName'];
+    }
+    
     // news
     function getAllNewsFromDB()
     {
