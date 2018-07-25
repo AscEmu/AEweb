@@ -13,10 +13,13 @@
             break;
     }
     
-    
-                    
+    $maxNewsToShow = 3;
+    $shownNewsCount = 1;
     foreach($rows as $row)
     {
+        if ($shownNewsCount > $maxNewsToShow)
+            break;
+        
         echo '<h2>'.$row["title"].'</h2>';
         echo $row["time"].' by '.$webDB->getUserNameForId($row["userId"]).'<br>';
         echo html_entity_decode($row["text"]);
@@ -34,5 +37,7 @@
                 </div>';
         }
         echo '<hr>';
+        
+        $shownNewsCount++;
     }
 ?>
