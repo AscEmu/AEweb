@@ -2,7 +2,7 @@
 
 ?>
 
-<?php include 'content/header.cont.php'; ?>
+<?php include 'content/head.tmp.php'; ?>
 
 <div class="main">
     <div class="container">
