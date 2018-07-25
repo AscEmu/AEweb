@@ -41,8 +41,7 @@ if (isset($_POST['openEditForm']))
     {
         echo '<div class="alert alert-danger alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <strong>Error!</strong> Tried to load news with id '.$newsId;
-        echo '    </div>';
+              <strong>Error!</strong> Tried to load news with id '.$newsId.'</div>';
     }
     else
     {

@@ -23,28 +23,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <?php
-                    $news = $webDB->getAllNewsFromDB();
-                    while($row = $news->fetch_array())
-                    {
-                       $rows[] = $row;
-                    }
-                    
-                    foreach($rows as $row)
-                    {
-                        echo '<h2>'.$row["title"].'</h2>';
-                        echo $row["userId"];
-                        echo $row["time"];
-                        echo html_entity_decode($row["text"]);
-                        echo '<form method="post" action="/admin/news" autocomplete="off">
-                                <input type="hidden" name="id" value="'.$row["id"].'">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-danger btn-sm" name="deleteNews"><i class="far fa-trash-alt"></i></button>
-                                        <button type="submit" class="btn btn-warning btn-sm" name="openEditForm"><i class="far fa-edit"></i></button>
-                                    </div>
-                              </form>';
-                    }
-                ?>
+                <?php include 'modules/news/index.php'; ?>
             </div>
             <div class="col-lg-4">
                 <?php include 'modules/realmstatus/index.php'; ?>
