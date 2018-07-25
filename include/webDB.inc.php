@@ -37,6 +37,20 @@ class WebDB extends Database
         return mysqli_query($this->connection, $query);
     }
     
+    function getAvatar($id)
+    {
+        $query = "SELECT avatar FROM users WHERE id = '$id'";
+        $result = mysqli_query($this->connection, $query);
+        $userFields = $result->fetch_assoc();
+        return $userFields['avatar'];
+    }
+    
+    function setNewAvatar($id, $avatarName)
+    {
+        $query = "UPDATE users SET avatar = '$avatarName' WHERE id = '$id'";
+        return mysqli_query($this->connection, $query);
+    }
+    
     // news
     function getAllNewsFromDB()
     {

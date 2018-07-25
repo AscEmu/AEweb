@@ -1,8 +1,73 @@
+<?php include 'content/header.cont.php'; ?>
+
 <?php
+
+if(isset($_POST["uploadAvatar"]))
+{
+    $uploadDir = "uploads/avatars/";
+    $uploadFirAndFileName = $uploadDir . Session::get('userid').'_'.basename($_FILES["fileToUpload"]["name"]);
+    $isUploaded = true;
+    $imageFileType = strtolower(pathinfo($uploadFirAndFileName,PATHINFO_EXTENSION));
+
+    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    if($check !== false)
+        $isUploaded = true;
+    else
+        $isUploaded = false;
+    
+    if (file_exists($uploadFirAndFileName))
+        $isUploaded = false;
+
+    if ($_FILES["fileToUpload"]["size"] > 500000)
+        $isUploaded = false;
+
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif" )
+        $isUploaded = false;
+    
+    // get current avatar
+    $oldAvatar = $webDB->getAvatar(Session::get('userid'));
+
+    if ($isUploaded)
+    {
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $uploadFirAndFileName))
+        {
+            $result = $webDB->setNewAvatar(Session::get('userid'), Session::get('userid').'_'.$_FILES["fileToUpload"]["name"]);
+            if ($result)
+            {
+                if ($oldAvatar != "default.jpg")
+                    unlink($uploadDir . $oldAvatar);
+                
+                //header("Refresh:0");
+            }
+        }
+    }
+}
 
 ?>
 
-<?php include 'content/header.cont.php'; ?>
+<?php include 'content/userNavigation.cont.php'; ?>
+<?php include 'content/navigation.cont.php'; ?>
+<?php include 'content/errorBox.cont.php'; ?>
+
+<!-- hidden page form start -->
+    <div id="overlay-page" onclick="overlayOff('page')">
+        <div id="page">
+            <div id="page-form">
+            <form method="post" action="home" enctype="multipart/form-data">
+                    <div class="form-group">
+                        Select image to upload:
+                        <label for="fileToUpload">Upload Image</label>
+                        <input type="file" class="form-control-file" name="fileToUpload" id="fileToUpload">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" name="uploadAvatar">Upload Avatar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<!-- hidden page form ends -->
 
 <div class="main">
     <div class="container">
@@ -51,6 +116,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
+                <button type="button" class="btn btn-success btn-lg" onclick="overlayOn('page')"><i class="fas fa-id-card-alt"></i> Change Image</button>
             </div>
         </div>
     </div>
