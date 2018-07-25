@@ -23,8 +23,8 @@ Welcome to AEweb. If you want to contribute, feel free to create an issue or pul
 - [ ] Displayname change
 - [ ] Flags (account flags for showing available gameservers in realmlist) change
 
-- [ ] Avatar set/upload
-- [ ] Avatar remove
+- [x] Avatar set/upload
+- [x] Avatar remove
 
 
 
