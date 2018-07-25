@@ -7,6 +7,7 @@ namespace Config
     {
         const rootPath = "";
         const baseURL = "http://127.0.0.1/";
+        const maxUploadSize = 800000;       // in Byte
     }
     
     class Info

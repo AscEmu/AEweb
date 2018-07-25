@@ -2,43 +2,39 @@
 
 <?php
 
-if(isset($_POST["uploadAvatar"]))
+if (isset($_POST["uploadAvatar"]))
 {
     $uploadDir = "uploads/avatars/";
-    $uploadFirAndFileName = $uploadDir . Session::get('userid').'_'.basename($_FILES["fileToUpload"]["name"]);
+    $uploadDirAndFileName = $uploadDir . Session::get('userid').'_'.basename($_FILES["fileAvatar"]["name"]);
     $isUploaded = true;
-    $imageFileType = strtolower(pathinfo($uploadFirAndFileName,PATHINFO_EXTENSION));
+    $imageFileType = strtolower(pathinfo($uploadDirAndFileName,PATHINFO_EXTENSION));
 
-    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    if($check !== false)
+    $checkImage = getimagesize($_FILES["fileAvatar"]["tmp_name"]);
+    if ($checkImage !== false)
         $isUploaded = true;
     else
         $isUploaded = false;
     
-    if (file_exists($uploadFirAndFileName))
+    if (file_exists($uploadDirAndFileName))
         $isUploaded = false;
 
-    if ($_FILES["fileToUpload"]["size"] > 500000)
+    if ($_FILES["fileAvatar"]["size"] > Config\Hosting::maxUploadSize)
         $isUploaded = false;
 
-    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-        && $imageFileType != "gif" )
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" )
         $isUploaded = false;
     
-    // get current avatar
     $oldAvatar = $webDB->getAvatar(Session::get('userid'));
 
     if ($isUploaded)
     {
-        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $uploadFirAndFileName))
+        if (move_uploaded_file($_FILES["fileAvatar"]["tmp_name"], $uploadDirAndFileName))
         {
-            $result = $webDB->setNewAvatar(Session::get('userid'), Session::get('userid').'_'.$_FILES["fileToUpload"]["name"]);
+            $result = $webDB->setNewAvatar(Session::get('userid'), Session::get('userid').'_'.$_FILES["fileAvatar"]["name"]);
             if ($result)
             {
                 if ($oldAvatar != "default.jpg")
                     unlink($uploadDir . $oldAvatar);
-                
-                //header("Refresh:0");
             }
         }
     }
@@ -54,12 +50,16 @@ if(isset($_POST["uploadAvatar"]))
     <div id="overlay-page" onclick="overlayOff('page')">
         <div id="page">
             <div id="page-form">
-            <form method="post" action="home" enctype="multipart/form-data">
+                <form method="post" action="home" enctype="multipart/form-data">
+                    <h3><i class="fas fa-id-card-alt"></i> Upload an Avatar</h3>
+                    <p>Maximum size of an avatar ist <?php echo Config\Hosting::maxUploadSize / 1000 ?> KB.</p>
+                    <p>The allowed formats are: .jpg, .png, .jpeg, and .gif.</p>
+                    <hr>
                     <div class="form-group">
-                        Select image to upload:
-                        <label for="fileToUpload">Upload Image</label>
-                        <input type="file" class="form-control-file" name="fileToUpload" id="fileToUpload">
+                        <label for="fileAvatar">Upload Image</label>
+                        <input type="file" class="form-control-file" name="fileAvatar" id="fileAvatar">
                     </div>
+                    <hr>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary" name="uploadAvatar">Upload Avatar</button>
                     </div>
@@ -116,7 +116,7 @@ if(isset($_POST["uploadAvatar"]))
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <button type="button" class="btn btn-success btn-lg" onclick="overlayOn('page')"><i class="fas fa-id-card-alt"></i> Change Image</button>
+                <button type="button" class="btn btn-success btn-lg" onclick="overlayOn('page')"><i class="fas fa-id-card-alt"></i> Upload new avatar</button>
             </div>
         </div>
     </div>
