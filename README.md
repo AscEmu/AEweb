@@ -1,8 +1,31 @@
 # AEweb
 Welcome to AEweb. If you want to contribute, feel free to create an issue or pullrequest.
 
+### Users
+- [x] Registration
+- [ ] E-Mail verification
+- [x] Login
+
+### Admin Panel
 - [x] News creation
 - [x] News deletion
+- [x] News edit
+
+- [ ] Slideshow add
+- [ ] Slideshow delete
+- [ ] Slideshow edit
+
+- [ ] Realms add description
+- [ ] Realms change description
+- [ ] Realms remove
+
+### Account Panel
+- [ ] Displayname change
+- [ ] Flags (account flags for showing available gameservers in realmlist) change
+
+- [ ] Avatar set/upload
+- [ ] Avatar remove
+
 
 
 
