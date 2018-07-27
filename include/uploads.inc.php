@@ -2,9 +2,15 @@
 
 class Upload
 {
-    function uploadFile($image, $targetDir, $maxSize)
+    function uploadFile($image, $targetDir, $maxSize, $withUserPrefix = false)
     {
-        $uploadDirAndFileName = $targetDir . Session::get('userid').'_'.basename($image["uploadFile"]["name"]);
+        $uploadDirAndFileName = "";
+        
+        if ($withUserPrefix)
+            $uploadDirAndFileName = $targetDir . Session::get('userid').'_'.basename($image["uploadFile"]["name"]);
+        else
+            $uploadDirAndFileName = $targetDir . basename($image["uploadFile"]["name"]);
+        
         $isUploaded = true;
         $imageFileType = strtolower(pathinfo($uploadDirAndFileName,PATHINFO_EXTENSION));
 

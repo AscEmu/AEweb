@@ -18,7 +18,7 @@
 <script>
 var textarea = document.getElementById('text');
 sceditor.create(textarea, {
-	format: 'xhtml',
+	format: 'bbcode',
 	style: '<?php echo Config\Hosting::baseURL ?>include/sceditor-2.1.3/minified/themes/content/default.min.css'
 });
 </script>

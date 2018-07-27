@@ -21,6 +21,7 @@
         <div class="row">
             <div class="col-md-12">
                 <a href="/admin/news" class="btn btn-dark btn-lg" role="button"><i class="far fa-newspaper"></i> News Management</a>
+                <a href="/admin/slideshow" class="btn btn-dark btn-lg" role="button"><i class="far fa-images"></i> Manage Slideshow</a>
             </div>
         </div>
     </div>

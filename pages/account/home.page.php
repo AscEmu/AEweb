@@ -8,7 +8,7 @@ if (isset($_POST["uploadAvatar"]))
 {
     $uploadDir = "uploads/avatars/";
     
-    $isUploaded = Upload::uploadFile($_FILES, $uploadDir, Config\Hosting::maxUploadSize);
+    $isUploaded = Upload::uploadFile($_FILES, $uploadDir, Config\Hosting::maxUploadSize, true);
     
     $oldAvatar = $webDB->getAvatar(Session::get('userid'));
 

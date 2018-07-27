@@ -102,6 +102,10 @@
   <?php } ?>
 }
 
+.slide-container img.thumbs {
+    object-fit: cover;
+}
+
 .slide-container .slides-row:after {
   content: "";
   display: table;
@@ -114,7 +118,10 @@
 }
 
 .slide-container .thumbs {
-  opacity: 0.6;
+    opacity: 0.6;
+    max-width: 100%;
+    max-height: 100px;
+    height: auto;
 }
 
 .slide-container .active,
@@ -125,7 +132,7 @@
 
 <div class="slide-container">
 <?php
-$result = $webDB->getAllSlides();
+$result = $webDB->getLatestSlides();
 
 if (!$result)
     echo 'ERROR!';
@@ -153,16 +160,16 @@ while ($row = mysqli_fetch_array($result))
 <?php
 
 // load data from db
-$result = $webDB->getAllSlides();
+$result = $webDB->getLatestSlides();
 
 if (!$result)
     echo 'ERROR!';
-
+-
 $count = 1;
 while ($row = mysqli_fetch_array($result))
 {
     echo '<div class="column">';
-    echo '<img class="thumbs cursor" src="uploads/slideshow/'.$row["imageName"].'" style="width:100%" onclick="currentSlide('.$count.')" alt="'.$row["caption"].'">';
+    echo '<img class="thumbs cursor" src="uploads/slideshow/'.$row["imageName"].'" style="width:100%" onclick="currentSlide('.$count.')" alt="'.BBCodeParser::toHtml($row["caption"]).'">';
     echo '<div class="slideAuthor" id="'.$row["author"].'"></div>';
     echo '</div>';
     

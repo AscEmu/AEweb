@@ -22,7 +22,7 @@
         
         echo '<h2>'.$row["title"].'</h2>';
         echo $row["time"].' by '.$webDB->getUserNameForId($row["userId"]).'<br>';
-        echo html_entity_decode($row["text"]);
+        echo BBCodeParser::toHtml($row["text"]);
         //todo check for user rights instead of the userid!
         if (Session::get('userid'))
         {

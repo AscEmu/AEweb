@@ -1,32 +1,38 @@
 
 <?php include 'content/head.tmp.php'; ?>
 
+<?php include_once 'include/uploads.inc.php'; ?>
+
 
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
 <?php
 
-// create news
-if (isset($_POST['createNews']))
+// create slide
+if (isset($_POST['createSlide']))
 {
-    $userId = $_POST['userId'];
-    $title = $_POST['title'];
-    $text = $_POST['text'];
-    
-    $newsQuery = $webDB->addNewsToDB($userId, $title, $text);
-    if (!$newsQuery)
+    $imageName = $_FILES["uploadFile"]["name"];
+    $caption = $_POST['text'];
+    $author = $_POST['author'];
+
+    $slideQuery = $webDB->addSlideToDB($imageName, $caption, $author);
+    if (!$slideQuery)
     {
         echo '<div class="alert alert-danger alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <strong>Error!</strong> News not created in database.
+              <strong>Error!</strong> Slide not added to table slideshow. Query failed.
             </div>';
     }
     else
     {
+        $uploadDir = "uploads/slideshow/";
+    
+        $isUploaded = Upload::uploadFile($_FILES, $uploadDir, Config\Hosting::maxUploadSize);
+    
         echo '<div class="alert alert-success alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <strong>Success!</strong> News created in database.
+              <strong>Success!</strong> Slide added to database.
             </div>';
     }
 }
@@ -34,78 +40,81 @@ if (isset($_POST['createNews']))
 // load data in case of a change request
 if (isset($_POST['openEditForm']))
 {
-    $newsId = $_POST['id'];
+    $slideId = $_POST['id'];
     
-    $newsQuery = $webDB->getNewsById($newsId);
-    if (!$newsQuery)
+    $slideQuery = $webDB->getSlideById($slideId);
+    if (!$slideQuery)
     {
         echo '<div class="alert alert-danger alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <strong>Error!</strong> Tried to load news with id '.$newsId.'</div>';
-    }
-    else
-    {
-        echo '<div class="alert alert-success alert-dismissible">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <strong>Success!</strong> News loaded.
-            </div>';
+              <strong>Error!</strong> Tried to load slide with id '.$slideId.' from db - FAILED</div>';
     }
     
-    while($row = $newsQuery->fetch_array())
+    while($row = $slideQuery->fetch_array())
     {
        $ChangeRows = $row;
     }
 }
 
 // change news in admin/news page
-if (isset($_POST['editNews']))
+if (isset($_POST['editSlide']))
 {
-    $userId = $_POST['userId'];
-    $title = $_POST['titelChange'];
-    $text = $_POST['textChange'];
+    $imageName = "";
+    if (isset($_FILES))
+        $imageName = $_FILES["uploadFile"]["name"];
+    
+    $caption = $_POST['textChange'];
+    $author = $_POST['authorChange'];
     $id = $_POST['id'];
-    
-    $newsQuery = $webDB->updateNewsInDB($userId, $title, $text, $id);
-    if (!$newsQuery)
+
+    $slideQuery = $webDB->updateSlideInDB($id, $imageName, $caption, $author);
+    if (!$slideQuery)
     {
         echo '<div class="alert alert-danger alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <strong>Error!</strong> News not updated in database.
+              <strong>Error!</strong> Slide not edited in table slideshow. Query failed.
             </div>';
     }
     else
     {
+        if (isset($_FILES) && !empty($_FILES["uploadFile"]["name"]))
+        {
+            $uploadDir = "uploads/slideshow/";
+    
+            $isUploaded = Upload::uploadFile($_FILES, $uploadDir, Config\Hosting::maxUploadSize);
+        }
+    
         echo '<div class="alert alert-success alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <strong>Success!</strong> News updated in database.
+              <strong>Success!</strong> Slide edited in database.
             </div>';
     }
 }
 
-// delete news
-if (isset($_POST['deleteNews']))
+// delete slide
+if (isset($_POST['deleteSlide']))
 {
-    $newsId = $_POST['id'];
+    $slideId = $_POST['id'];
     
-    $newsQuery = $webDB->deleteNewsById($newsId);
-    if (!$newsQuery)
+    $slideQuery = $webDB->deleteSlideById($slideId);
+    if (!$slideQuery)
     {
         echo '<div class="alert alert-danger alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <strong>Error!</strong> News not deleted from database.
+              <strong>Error!</strong> Slide not deleted from database.
             </div>';
     }
     else
     {
         echo '<div class="alert alert-success alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <strong>Success!</strong> News deleted from database.
+              <strong>Success!</strong> Slide deleted from database.
             </div>';
     }
 }
 
-// get news from db
-$news = $webDB->getAllNewsFromDB();
+// get slides from db
+$news = $webDB->getAllSlides();
 while($row = $news->fetch_array())
 {
    $rows[] = $row;
@@ -117,22 +126,20 @@ while($row = $news->fetch_array())
     <div id="overlay-page" onclick="overlayOff('page')">
         <div id="page">
             <div id="page-form">
-            <form method="post" action="/admin/news" autocomplete="off">
-                <input type="hidden" name="actionType" value="2">
-                <input type="hidden" name="id" value="<?php echo isset($ChangeRows["id"]) ? $ChangeRows["id"] : 0; ?>">
-                    <input type="hidden" name="userId" value="<?php echo Session::get('userid') ?>">
+                <form method="post" action="/admin/slideshow" enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="<?php echo $_POST['id'] ?>">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="titelChange" name="titelChange" value="<?php echo isset($ChangeRows["title"]) ? $ChangeRows["title"] : ""; ?>">
+                        <label for="uploadFile">Upload New Image</label>
+                        <input type="file" class="form-control-file" name="uploadFile" id="uploadFile">
                     </div>
                     <div class="form-group">
-                        <label for="uploadChange">Upload lead image</label>
-                        <input type="file" class="form-control-file" id="uploadChange">
+                        <input type="text" class="form-control" id="authorChange" name="authorChange" placeholder="Author">
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" id="textChange" name="textChange" rows="15" ></textarea>
+                        <textarea class="form-control" id="textChange" name="textChange" rows="15"></textarea>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary" name="editNews">Update News</button>
+                        <button type="submit" class="btn btn-primary" name="editSlide">Add Slide</button>
                     </div>
                 </form>
             </div>
@@ -148,15 +155,15 @@ while($row = $news->fetch_array())
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h2><i class="far fa-newspaper"></i> Latest News</h2>
+                <h2><i class="far fa-images"></i> Slides</h2>
                 <table id="news-list" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>title</th>
-                            <th>User ID</th>
-                            <th>time</th>
-                            <th>action</th>
+                            <th>Image</th>
+                            <th>Caption</th>
+                            <th>Author</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -166,15 +173,15 @@ while($row = $news->fetch_array())
                                     $pg = "'page'";
                                     $text = isset($row["text"]) ? $row["text"] : "";
                                     echo '<tr>';
-                                    echo     '<td>'.$row["id"].'</td>';
-                                    echo     '<td>'.$row["title"].'</td>';
-                                    echo     '<td>'.$row["userId"].'</td>';
-                                    echo     '<td>'.$row["time"].'</td>';
+                                    echo     '<td>'.$row["sort"].'</td>';
+                                    echo     '<td><img src="/uploads/slideshow/'.$row["imageName"].'" height="80px" width="auto"></td>';
+                                    echo     '<td>'.BBCodeParser::toHtml($row["caption"]).'</td>';
+                                    echo     '<td>'.$row["author"].'</td>';
                                     echo     '<td>';
-                                    echo     '<form method="post" action="/admin/news" autocomplete="off">
-                                                <input type="hidden" name="id" value="'.$row["id"].'">
+                                    echo     '<form method="post" action="/admin/slideshow" autocomplete="off">
+                                                <input type="hidden" name="id" value="'.$row["sort"].'">
                                                 <div class="form-group">
-                                                    <button type="submit" class="btn btn-danger btn-sm" name="deleteNews"><i class="far fa-trash-alt"></i></button>
+                                                    <button type="submit" class="btn btn-danger btn-sm" name="deleteSlide"><i class="far fa-trash-alt"></i></button>
                                                     <button type="submit" class="btn btn-warning btn-sm" name="openEditForm"><i class="far fa-edit"></i></button>
                                                 </div>
                                             </form>';
@@ -193,40 +200,33 @@ while($row = $news->fetch_array())
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <h2>Write some news</h2>
-                <p>Let people know what is going on right now. Your Text will appear on the frontpage!</p>
-                <p>You should avoid any coloring and sizing since it gets overwritten with the default style of the page.</p>
-                <p>Feel free to add a picture to your message. It will appear in the default news image area on the home page.</p>
+                <h2>Add a slide</h2>
+                <p>You can simply add new slides to your slideshow with this form.</p>
+                <p>A slide should always contain a short caption and the author (if the author is empty it will be you).</p>
+                <p>The last four slides will be shown on the front page. Delete unused slides.</p>
             </div>
             <div class="col-md-7">
-                <h2> News</h2>
-                <form method="post" action="/admin/news" autocomplete="off">
-                    <input type="hidden" name="actionType" value="1">
+                <h2> Slide</h2>
+                <form method="post" action="/admin/slideshow" enctype="multipart/form-data">
                     <input type="hidden" name="userId" value="<?php echo Session::get('userid') ?>">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="titel" name="title" placeholder="Titel">
+                        <label for="uploadFile">Upload Image</label>
+                        <input type="file" class="form-control-file" name="uploadFile" id="uploadFile">
                     </div>
                     <div class="form-group">
-                        <label for="upload">Upload lead image</label>
-                        <input type="file" class="form-control-file" id="upload">
+                        <input type="text" class="form-control" id="author" name="author" placeholder="Author">
                     </div>
                     <div class="form-group">
                         <textarea class="form-control" id="text" name="text" rows="15"></textarea>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary" name="createNews">Post News</button>
+                        <button type="submit" class="btn btn-primary" name="createSlide">Add Slide</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-$(document).ready(function() {
-    $('#news-list').DataTable();
-} );
-</script>
 
 <script>
 var textarea2 = document.getElementById('textChange');
@@ -236,7 +236,10 @@ sceditor.create(textarea2, {
 });
 
 var instance = sceditor.instance(textarea2);
-instance.insert('<?php echo isset($ChangeRows["text"]) ? html_entity_decode($ChangeRows["text"]) : ""; ?>');
+instance.insert('<?php echo isset($ChangeRows["caption"]) ? $webDB->escapeString($ChangeRows["caption"]) : ""; ?>');
+
+document.getElementById("authorChange").value = "<?php echo isset($ChangeRows["author"]) ? $ChangeRows["author"] : ""; ?>";
+document.getElementById("uploadFile").value = "<?php echo isset($ChangeRows["imageName"]) ? $ChangeRows["imageName"] : ""; ?>";
 </script>
 
 <?php include 'content/footer.cont.php'; ?>

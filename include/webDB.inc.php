@@ -94,11 +94,52 @@ class WebDB extends Database
     }
     
     // slideshow
-    function getAllSlides()
+    function getLatestSlides()
     {
-        $query = "SELECT sort, imageName, caption, author FROM slideshow ORDER BY sort ASC";
+        $query = "SELECT sort, imageName, caption, author FROM slideshow ORDER BY sort DESC LIMIT 4";
         $result = mysqli_query($this->connection, $query);			
         return $result;
+    }
+    
+    function getAllSlides()
+    {
+        $query = "SELECT sort, imageName, caption, author FROM slideshow ORDER BY sort DESC";
+        $result = mysqli_query($this->connection, $query);			
+        return $result;
+    }
+    
+    function getSlideById($id)
+    {
+        $query = "SELECT sort, imageName, caption, author FROM slideshow WHERE sort = '$id'";
+        return mysqli_query($this->connection, $query);
+    }
+    
+    function addSlideToDB($imageName, $caption, $author)
+    {
+        $text = $this->escapeString($caption);
+        $textForm = htmlspecialchars($text);
+        $query = "INSERT INTO slideshow(sort, imageName, caption, author) VALUES(NULL, '$imageName', '$textForm', '$author')";
+        return mysqli_query($this->connection, $query);
+    }
+    
+    function updateSlideInDB($id, $image, $caption, $author)
+    {
+        $text = $this->escapeString($caption);
+        $textForm = htmlspecialchars($text);
+        $query = "";
+        
+        if (!empty($image))
+            $query = "REPLACE INTO slideshow(sort, imageName, caption, author) VALUES($id, '$image', '$textForm', '$author')";
+        else
+            $query = "UPDATE slideshow SET caption = '$textForm', author = '$author' WHERE sort = $id";
+        
+        return mysqli_query($this->connection, $query);
+    }
+    
+    function deleteSlideById($id)
+    {
+        $query = "DELETE FROM slideshow WHERE sort = '$id'";
+        return mysqli_query($this->connection, $query);
     }
     
 }
