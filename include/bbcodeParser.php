@@ -2,7 +2,7 @@
 
 class BBCodeParser
 {
-    function toHtml($string)
+    public static function toHtml($string)
     {
         $bbcodes = array(
             '~\[b\](.*?)\[/b\]~s',
