@@ -1,42 +1,22 @@
 <?php include 'content/header.cont.php'; ?>
 
+<?php include_once 'include/uploads.inc.php'; ?>
+
 <?php
 
 if (isset($_POST["uploadAvatar"]))
 {
     $uploadDir = "uploads/avatars/";
-    $uploadDirAndFileName = $uploadDir . Session::get('userid').'_'.basename($_FILES["fileAvatar"]["name"]);
-    $isUploaded = true;
-    $imageFileType = strtolower(pathinfo($uploadDirAndFileName,PATHINFO_EXTENSION));
-
-    $checkImage = getimagesize($_FILES["fileAvatar"]["tmp_name"]);
-    if ($checkImage !== false)
-        $isUploaded = true;
-    else
-        $isUploaded = false;
     
-    if (file_exists($uploadDirAndFileName))
-        $isUploaded = false;
-
-    if ($_FILES["fileAvatar"]["size"] > Config\Hosting::maxUploadSize)
-        $isUploaded = false;
-
-    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" )
-        $isUploaded = false;
+    $isUploaded = Upload::uploadFile($_FILES, $uploadDir, Config\Hosting::maxUploadSize);
     
     $oldAvatar = $webDB->getAvatar(Session::get('userid'));
 
-    if ($isUploaded)
+    $result = $webDB->setNewAvatar(Session::get('userid'), Session::get('userid').'_'.$_FILES["uploadFile"]["name"]);
+    if ($result)
     {
-        if (move_uploaded_file($_FILES["fileAvatar"]["tmp_name"], $uploadDirAndFileName))
-        {
-            $result = $webDB->setNewAvatar(Session::get('userid'), Session::get('userid').'_'.$_FILES["fileAvatar"]["name"]);
-            if ($result)
-            {
-                if ($oldAvatar != "default.jpg")
-                    unlink($uploadDir . $oldAvatar);
-            }
-        }
+        if ($oldAvatar != "default.jpg")
+            Upload::removeFile($uploadDir, $oldAvatar);
     }
 }
 
@@ -56,8 +36,8 @@ if (isset($_POST["uploadAvatar"]))
                     <p>The allowed formats are: .jpg, .png, .jpeg, and .gif.</p>
                     <hr>
                     <div class="form-group">
-                        <label for="fileAvatar">Upload Image</label>
-                        <input type="file" class="form-control-file" name="fileAvatar" id="fileAvatar">
+                        <label for="uploadFile">Upload Image</label>
+                        <input type="file" class="form-control-file" name="uploadFile" id="uploadFile">
                     </div>
                     <hr>
                     <div class="form-group">
