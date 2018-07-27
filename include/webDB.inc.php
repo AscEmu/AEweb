@@ -92,4 +92,13 @@ class WebDB extends Database
         $query = "SELECT id, userId, title, time, text, image FROM news WHERE id = '$id'";
         return mysqli_query($this->connection, $query);
     }
+    
+    // slideshow
+    function getAllSlides()
+    {
+        $query = "SELECT sort, imageName, caption, author FROM slideshow ORDER BY sort ASC";
+        $result = mysqli_query($this->connection, $query);			
+        return $result;
+    }
+    
 }
