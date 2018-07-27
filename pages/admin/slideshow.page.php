@@ -14,7 +14,15 @@ if (isset($_POST['createSlide']))
 {
     $imageName = $_FILES["uploadFile"]["name"];
     $caption = $_POST['text'];
-    $author = $_POST['author'];
+    
+    $author = "";
+    if (!isset($_POST['author']))
+        $author = $_POST['author'];
+    else
+    {
+        $userFields = $webDB->getAllUserDataForAccount(Session::get('userid'));
+        $author = $userFields['displayName'];
+    }
 
     $slideQuery = $webDB->addSlideToDB($imageName, $caption, $author);
     if (!$slideQuery)
@@ -56,7 +64,7 @@ if (isset($_POST['openEditForm']))
     }
 }
 
-// change news in admin/news page
+// edit existing slide
 if (isset($_POST['editSlide']))
 {
     $imageName = "";
@@ -64,7 +72,16 @@ if (isset($_POST['editSlide']))
         $imageName = $_FILES["uploadFile"]["name"];
     
     $caption = $_POST['textChange'];
-    $author = $_POST['authorChange'];
+    
+    $author = "";
+    if (!isset($_POST['authorChange']))
+        $author = $_POST['authorChange'];
+    else
+    {
+        $userFields = $webDB->getAllUserDataForAccount(Session::get('userid'));
+        $author = $userFields['displayName'];
+    }
+    
     $id = $_POST['id'];
 
     $slideQuery = $webDB->updateSlideInDB($id, $imageName, $caption, $author);
@@ -129,7 +146,7 @@ while($row = $news->fetch_array())
                 <form method="post" action="/admin/slideshow" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="<?php echo $_POST['id'] ?>">
                     <div class="form-group">
-                        <label for="uploadFile">Upload New Image</label>
+                        <label for="uploadFile">Set New Image</label>
                         <input type="file" class="form-control-file" name="uploadFile" id="uploadFile">
                     </div>
                     <div class="form-group">
@@ -139,7 +156,7 @@ while($row = $news->fetch_array())
                         <textarea class="form-control" id="textChange" name="textChange" rows="15"></textarea>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary" name="editSlide">Add Slide</button>
+                        <button type="submit" class="btn btn-primary" name="editSlide">Update Slide</button>
                     </div>
                 </form>
             </div>
