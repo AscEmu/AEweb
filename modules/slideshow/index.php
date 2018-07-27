@@ -126,7 +126,7 @@
 <div class="slide-container">
 <?php
 // load data from db
-$query = "SELECT sort, imageName, caption, author FROM mod_slideshow ORDER BY sort ASC";
+$query = "SELECT sort, imageName, caption, author FROM slideshow ORDER BY sort ASC";
 $result = $webDB->runQuery($query);
 
 if (!$result)
@@ -155,7 +155,7 @@ while ($row = mysqli_fetch_array($result))
 <?php
 
 // load data from db
-$query = "SELECT sort, imageName, caption, author FROM mod_slideshow ORDER BY sort ASC";
+$query = "SELECT sort, imageName, caption, author FROM slideshow ORDER BY sort ASC";
 $result = $webDB->runQuery($query);
 
 if (!$result)
