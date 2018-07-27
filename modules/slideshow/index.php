@@ -140,7 +140,7 @@ while ($row = mysqli_fetch_array($result))
     {
         echo '<div class="numbertext">'.$count.'/'.$result->num_rows.'</div>';
     }
-    echo '<img src="images/'.$row["imageName"].'" style="width:100%">';
+    echo '<img src="uploads/slideshow/'.$row["imageName"].'" style="width:100%">';
     echo '</div>';
     ++$count;
 }
@@ -165,7 +165,7 @@ $count = 1;
 while ($row = mysqli_fetch_array($result))
 {
     echo '<div class="column">';
-    echo '<img class="thumbs cursor" src="images/'.$row["imageName"].'" style="width:100%" onclick="currentSlide('.$count.')" alt="'.$row["caption"].'">';
+    echo '<img class="thumbs cursor" src="uploads/slideshow/'.$row["imageName"].'" style="width:100%" onclick="currentSlide('.$count.')" alt="'.$row["caption"].'">';
     echo '<div class="slideAuthor" id="'.$row["author"].'"></div>';
     echo '</div>';
     
