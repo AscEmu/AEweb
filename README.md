@@ -11,9 +11,9 @@ Welcome to AEweb. If you want to contribute, feel free to create an issue or pul
 - [x] News deletion
 - [x] News edit
 
-- [ ] Slideshow add
-- [ ] Slideshow delete
-- [ ] Slideshow edit
+- [x] Slideshow add
+- [x] Slideshow delete
+- [x] Slideshow edit
 
 - [ ] Realms add description
 - [ ] Realms change description
