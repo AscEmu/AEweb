@@ -22,6 +22,7 @@
             <div class="col-md-12">
                 <a href="/admin/news" class="btn btn-dark btn-lg" role="button"><i class="far fa-newspaper"></i> News Management</a>
                 <a href="/admin/slideshow" class="btn btn-dark btn-lg" role="button"><i class="far fa-images"></i> Manage Slideshow</a>
+                <a href="/admin/realms" class="btn btn-dark btn-lg" role="button"><i class="fas fa-server"></i> Realm Servers</a>
             </div>
         </div>
     </div>
