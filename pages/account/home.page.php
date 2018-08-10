@@ -20,6 +20,15 @@ if (isset($_POST["uploadAvatar"]))
     }
 }
 
+if (isset($_POST["deleteAvatar"]))
+{
+    $oldAvatar = $webDB->getAvatar(Session::get('userid'));
+    if ($oldAvatar != "default.jpg")
+            Upload::removeFile($uploadDir, $oldAvatar);
+    
+    $webDB->setNewAvatar(Session::get('userid'), "default.jpg");
+}
+
 ?>
 
 <?php include 'content/userNavigation.cont.php'; ?>
@@ -42,6 +51,7 @@ if (isset($_POST["uploadAvatar"]))
                     <hr>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary" name="uploadAvatar">Upload Avatar</button>
+                        <button class="btn btn-danger" name="deleteAvatar">Delete Avatar</button>
                     </div>
                 </form>
             </div>
@@ -96,7 +106,7 @@ if (isset($_POST["uploadAvatar"]))
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <button type="button" class="btn btn-success btn-lg" onclick="overlayOn('page')"><i class="fas fa-id-card-alt"></i> Upload new avatar</button>
+                <button type="button" class="btn btn-success btn-lg" onclick="overlayOn('page')"><i class="fas fa-id-card-alt"></i> Change Avatar</button>
             </div>
         </div>
     </div>
