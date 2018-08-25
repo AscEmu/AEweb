@@ -29,6 +29,13 @@ if (isset($_POST["deleteAvatar"]))
     $webDB->setNewAvatar(Session::get('userid'), "default.jpg");
 }
 
+if (isset($_POST["setNewName"]))
+{
+    $newName = $_POST["nameChange"];
+    
+    $webDB->setNewName(Session::get('userid'), $newName);
+}
+
 ?>
 
 <?php include 'content/userNavigation.cont.php'; ?>
@@ -57,6 +64,28 @@ if (isset($_POST["deleteAvatar"]))
             </div>
         </div>
     </div>
+    <!-- displayname -->
+    <div id="overlay-namechange" onclick="overlayOff('namechange')">
+        <div id="namechange">
+            <div id="namechange-form">
+                <form method="post" action="home" enctype="multipart/form-data">
+                    <h3><i class="fas fa-tag"></i> Change Name</h3>
+                    <p>Set a new name displayed for all other users:</p>
+                    <hr>
+                    <input type="hidden" name="userId" value="<?php echo Session::get('userid') ?>">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="nameChange" name="nameChange">
+                    </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" name="setNewName">Set Name</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 <!-- hidden page form ends -->
 
 <div class="main">
@@ -107,6 +136,7 @@ if (isset($_POST["deleteAvatar"]))
         <div class="row">
             <div class="col-12">
                 <button type="button" class="btn btn-success btn-lg" onclick="overlayOn('page')"><i class="fas fa-id-card-alt"></i> Change Avatar</button>
+                <button type="button" class="btn btn-success btn-lg" onclick="overlayOn('namechange')"><i class="fas fa-tag"></i> Change Name</button>
             </div>
         </div>
     </div>

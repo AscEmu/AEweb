@@ -48,6 +48,11 @@ $(document).ready(function() {
     $('#page-form').click(function(e) {
         e.stopPropagation();
     });
+    
+    // account panel
+    $('#namechange-form').click(function(e) {
+        e.stopPropagation();
+    });
 
 });
 </script>

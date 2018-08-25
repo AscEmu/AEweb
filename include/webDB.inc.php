@@ -59,6 +59,19 @@ class WebDB extends Database
         return $userFields['displayName'];
     }
     
+    // account panel
+    function setNewName($id, $newName)
+    {
+        $queryCheck = "SELECT * FROM users WHERE displayName = '$newName'";
+        $result = mysqli_query($this->connection, $queryCheck);
+        if (!$result->num_rows)
+        {
+           $query = "UPDATE users SET displayName = '$newName' WHERE id = '$id'";
+            return mysqli_query($this->connection, $query); 
+        }
+        return 0;
+    }
+    
     // news
     function getAllNewsFromDB()
     {
