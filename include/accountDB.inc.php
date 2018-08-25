@@ -166,11 +166,31 @@ class AccountDB extends Database
         return $results;
     }
     
+    //realms
+    function getAvailableRealms()
+    {
+        $query = "SELECT * FROM realms";
+        $result = mysqli_query($this->connection, $query);
+        return $result;
+    }
+    
     function getRealmDataForId($id)
     {
-        $query = "SELECT * FROM realms WHERE id = '$id'";
+        $query = "SELECT `id`, `password`, `status`, `status_change_time` FROM realms WHERE id = $id";
         $result = mysqli_query($this->connection, $query);
         $results = $result->fetch_assoc();
         return $results;
+    }
+    
+    function setRealmData($id, $password)
+    {
+        $query = "REPLACE INTO realms(`id`, `password`, `status`) VALUES($id, '$password', 0)";
+        return mysqli_query($this->connection, $query);
+    }
+    
+    function deleteRealmById($id)
+    {
+        $query = "DELETE FROM realms WHERE id = '$id'";
+        return mysqli_query($this->connection, $query);
     }
 }

@@ -15,9 +15,9 @@ Welcome to AEweb. If you want to contribute, feel free to create an issue or pul
 - [x] Slideshow delete
 - [x] Slideshow edit
 
-- [ ] Realms add description
-- [ ] Realms change description
-- [ ] Realms remove
+- [X] Realms add
+- [X] Realms change
+- [X] Realms delete
 
 ### Account Panel
 - [X] Displayname change

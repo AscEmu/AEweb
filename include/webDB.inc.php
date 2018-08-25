@@ -155,4 +155,25 @@ class WebDB extends Database
         return mysqli_query($this->connection, $query);
     }
     
+    // realms
+    function setRealmData($id, $host, $user, $password, $database, $name, $description, $version)
+    {
+        $query = "REPLACE INTO realms(`id`, `host`, `user`, `password`, `database`, `name`, `description`, `version`, `flags`) VALUES($id, '$host', '$user', '$password', '$database', '$name', '$description', '$version', 0)";
+        return mysqli_query($this->connection, $query);
+    }
+    
+    function deleteRealmById($id)
+    {
+        $query = "DELETE FROM realms WHERE id = '$id'";
+        return mysqli_query($this->connection, $query);
+    }
+    
+    function getRealmInfoFromDB($id)
+    {
+        $query = "SELECT `id`, `host`, `user`, `database`, `name`, `description`, `version` FROM realms WHERE id = $id";
+        $result = mysqli_query($this->connection, $query);
+        $results = $result->fetch_assoc();
+        return $results;
+    }
+    
 }
