@@ -170,7 +170,7 @@ class WebDB extends Database
     
     function getRealmInfoFromDB($id)
     {
-        $query = "SELECT `id`, `host`, `user`, `database`, `name`, `description`, `version` FROM realms WHERE id = $id";
+        $query = "SELECT `id`, `host`, `user`, `password`, `database`, `name`, `description`, `version` FROM realms WHERE id = $id";
         $result = mysqli_query($this->connection, $query);
         $results = $result->fetch_assoc();
         return $results;

@@ -8,7 +8,6 @@
     include_once 'include/accountDB.inc.php';
     include_once 'include/session.inc.php';
     include_once 'include/webDB.inc.php';
-    include_once 'configs/realms.conf.php';
     include_once 'include/bbcodeParser.php';
 
     $accDB = new AccountDB();

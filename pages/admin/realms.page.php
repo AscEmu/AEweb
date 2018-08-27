@@ -188,14 +188,14 @@ while($row = $availableRealms->fetch_array())
                     <input type="hidden" name="CH_realmId" value="<?php echo isset($realmsChangeAccQuery["id"]) ? $realmsChangeAccQuery["id"] : 0; ?>">
                     <div class="form-group">
                         <label for="CH_name">Realm Name</label>
-                        <input type="text" class="form-control" id="CH_name" size="100" name="CH_name" value="<?php echo isset($realmsChangeQuery["name"]) ? $realmsChangeQuery["name"] : ""; ?>">
+                        <input type="text" class="form-control" id="CH_name" size="100" name="CH_name" value="<?php echo isset($realmsChangeQuery["name"]) ? $realmsChangeQuery["name"] : ""; ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="CH_description">Description</label>
-                        <input type="text" class="form-control" id="CH_description" name="CH_description"  value="<?php echo isset($realmsChangeQuery["description"]) ? $realmsChangeQuery["description"] : ""; ?>">
+                        <input type="text" class="form-control" id="CH_description" name="CH_description" value="<?php echo isset($realmsChangeQuery["description"]) ? $realmsChangeQuery["description"] : ""; ?>">
                     </div>
                     <div class="form-group">
-                        <label for="CH_description">Description</label>
+                        <label for="CH_version">Version</label>
                         <select name="CH_version">
                             <option value=""></option>
                             <option value="<?php echo isset($realmsChangeQuery["version"]) ? $realmsChangeQuery["version"] : ""; ?>"> Selected <?php echo isset($realmsChangeQuery["version"]) ? $realmsChangeQuery["version"] : ""; ?></option>
@@ -208,11 +208,11 @@ while($row = $availableRealms->fetch_array())
                     <hr>
                     <div class="form-group">
                         <label for="CH_db_host">Char DB Host</label>
-                        <input type="text" class="form-control" id="CH_db_host" name="CH_db_host" value="<?php echo isset($realmsChangeQuery["host"]) ? $realmsChangeQuery["host"] : ""; ?>">
+                        <input type="text" class="form-control" id="CH_db_host" name="CH_db_host" value="<?php echo isset($realmsChangeQuery["host"]) ? $realmsChangeQuery["host"] : ""; ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="CH_db_user">Char DB User</label>
-                        <input type="text" class="form-control" id="CH_db_user" name="CH_db_user" value="<?php echo isset($realmsChangeQuery["user"]) ? $realmsChangeQuery["user"] : ""; ?>">
+                        <input type="text" class="form-control" id="CH_db_user" name="CH_db_user" value="<?php echo isset($realmsChangeQuery["user"]) ? $realmsChangeQuery["user"] : ""; ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="CH_db_pass">Char DB Password</label>
@@ -220,12 +220,12 @@ while($row = $availableRealms->fetch_array())
                     </div>
                     <div class="form-group">
                         <label for="CH_db_name">Char DB Database</label>
-                        <input type="text" class="form-control" id="CH_db_name" name="CH_db_name" value="<?php echo isset($realmsChangeQuery["database"]) ? $realmsChangeQuery["database"] : ""; ?>">
+                        <input type="text" class="form-control" id="CH_db_name" name="CH_db_name" value="<?php echo isset($realmsChangeQuery["database"]) ? $realmsChangeQuery["database"] : ""; ?>" required>
                     </div>
                     <hr>
                     <div class="form-group">
                         <label for="CH_logon_pass">Char DB Logon Password</label>
-                        <input type="text" class="form-control" id="CH_logon_pass" name="CH_logon_pass" value="<?php echo isset($realmsChangeAccQuery["password"]) ? $realmsChangeAccQuery["password"] : ""; ?>">
+                        <input type="text" class="form-control" id="CH_logon_pass" name="CH_logon_pass" value="<?php echo isset($realmsChangeAccQuery["password"]) ? $realmsChangeAccQuery["password"] : ""; ?>" required>
                     </div>
                     <hr>
                     <div class="form-group">
@@ -299,7 +299,7 @@ while($row = $availableRealms->fetch_array())
                     <input type="hidden" name="actionType" value="1">
                     <input type="hidden" name="realmId" value="<?php echo $realmsCount + 1 ?>">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="description" name="description" placeholder="Description">
@@ -315,20 +315,20 @@ while($row = $availableRealms->fetch_array())
                     </div>
                     <hr>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="db_host" name="db_host" placeholder="Char DB Host e.g. 127.0.0.1">
+                        <input type="text" class="form-control" id="db_host" name="db_host" placeholder="Char DB Host e.g. 127.0.0.1" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="db_user" name="db_user" placeholder="Char DB User e.g. root">
+                        <input type="text" class="form-control" id="db_user" name="db_user" placeholder="Char DB User e.g. root" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="db_pass" name="db_pass" placeholder="Char DB Password e.g. rthjFTfutf!772">
+                        <input type="text" class="form-control" id="db_pass" name="db_pass" placeholder="Char DB Password e.g. rthjFTfutf!772" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="db_name" name="db_name" placeholder="Char DB Name e.g. ascemu_char">
+                        <input type="text" class="form-control" id="db_name" name="db_name" placeholder="Char DB Name e.g. ascemu_char" required>
                     </div>
                     <hr>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="logon_pass" name="logon_pass" placeholder="Logon Password e.g. change_me_logon">
+                        <input type="text" class="form-control" id="logon_pass" name="logon_pass" placeholder="Logon Password e.g. change_me_logon" required>
                     </div>
                     <hr>
                     <div class="form-group">

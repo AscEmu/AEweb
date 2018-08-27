@@ -105,12 +105,22 @@ li.status-offline:nth-child(1) {
 
 <div class="realms-container">
 <?php
+    $availableRealms = $accDB->getAvailableRealms();
+    
+    while($row = $availableRealms->fetch_array())
+    {
+       $StatusRows[] = $row;
+    }
+    
+///////////////////////////////////////
     $realmStatus;
                     
-    foreach (Config\Realm::$realms as $id=>$info)
+    foreach ($StatusRows as $info)
     {
+        $id = $info["id"];
+        $realmsFields = $webDB->getRealmInfoFromDB($info["id"]);
         echo '<div class="realm">';
-        $realmStatus[$id] = new RealmStatus($id, $info["dbhost"], $info["dbuser"], $info["dbpass"], $info["dbname"], $info["realmadress"], $info["realmport"]);
+        $realmStatus[$id] = new RealmStatus($realmsFields["id"], $realmsFields["host"], $realmsFields["user"], $realmsFields["password"], $realmsFields["database"]);
         if (!$realmStatus[$id])
         {
             echo 'Can\'t connect to realm db. Check out your realms.conf.php settings';
@@ -118,9 +128,9 @@ li.status-offline:nth-child(1) {
         else
         {
             echo '<div class="realms">';
-            echo '<h6>'.$info["name"].'</h6>';
-            echo ''.$info["description"].'<br>';
-            echo 'Version: '.$info["version"].' - Flags: '.$info["flags"].'<br>';
+            echo '<h6>'.$realmsFields["name"].'</h6>';
+            echo ''.$realmsFields["description"].'<br>';
+            echo 'Version: '.$realmsFields["version"].'<br>';
             echo '<p>'.$realmStatus[$id]->getCharacterCount().' Players</p>';
             $result = $accDB->getRealmDataForId($id);
             if ($result)
