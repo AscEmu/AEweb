@@ -176,4 +176,18 @@ class WebDB extends Database
         return $results;
     }
     
+    // forums
+    function getCategories()
+    {
+        $query = "SELECT id, name, description FROM board_categories ORDER BY id ASC";
+        $result = mysqli_query($this->connection, $query);			
+        return $result;
+    }
+    
+    function getTopicsInCategory($category_id)
+    {
+        $query = "SELECT id, subject, date, category_id, user_id FROM board_topics WHERE category_id = '$category_id' ORDER BY date ASC";
+        $result = mysqli_query($this->connection, $query);			
+        return $result;
+    }
 }

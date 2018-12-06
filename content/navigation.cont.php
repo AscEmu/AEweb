@@ -17,6 +17,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="/test2">Test2</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/forum">Forum</a>
+              </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" method="post" action="/search">
               <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchString">
