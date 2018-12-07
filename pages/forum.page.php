@@ -7,9 +7,9 @@
 <div class="basic-padding">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <!--<div class="col-md-12">-->
                 <?php include 'modules/forum/index.php'; ?>
-            </div>
+            <!--</div>-->
         </div>
     </div>
 </div>

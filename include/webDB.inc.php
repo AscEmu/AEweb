@@ -227,7 +227,7 @@ class WebDB extends Database
     
     function getSubCategoriesInCategory($category_id)
     {
-        $query = "SELECT id, parentId, name, description FROM board_categories WHERE parentId = '$category_id' ORDER BY id ASC";
+        $query = "SELECT id, parentId, name, description, type FROM board_categories WHERE parentId = '$category_id' ORDER BY id ASC";
         $result = mysqli_query($this->connection, $query);			
         return $result;
     }
