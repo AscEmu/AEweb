@@ -57,7 +57,7 @@ user bar
 
 .basic-padding
 {
-    padding: 25px 0;
+    padding: 25px 0 55px;
 }
 
 /*
@@ -193,5 +193,6 @@ footer
     width: 100%;
     background-color: #0D0D0D;
     color: #DCDCDC;
-    padding: 35px 0;
+    padding: 35px 0 25px;
+    height: 200px;
 }

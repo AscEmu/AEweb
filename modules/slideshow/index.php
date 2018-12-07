@@ -13,6 +13,11 @@
   position: relative;
 }
 
+@media (max-width: 991px){
+.slide-container {
+    padding-bottom: 25px;
+}}
+
 .imageSlide {
   display: none;
 }
@@ -104,6 +109,7 @@
 
 .slide-container img.thumbs {
     object-fit: cover;
+    height: 80px;
 }
 
 .slide-container .slides-row:after {
@@ -115,6 +121,7 @@
 .slide-container .column {
   float: left;
   width: 25%;
+  height: 80px;
 }
 
 .slide-container .thumbs {
@@ -145,7 +152,7 @@ while ($row = mysqli_fetch_array($result))
     {
         echo '<div class="numbertext">'.$count.'/'.$result->num_rows.'</div>';
     }
-    echo '<img src="uploads/slideshow/'.$row["imageName"].'" style="width:100%">';
+    echo '<img src="uploads/slideshow/'.$row["imageName"].'" style="width:100%; height: 300px;">';
     echo '</div>';
     ++$count;
 }
@@ -169,7 +176,7 @@ $count = 1;
 while ($row = mysqli_fetch_array($result))
 {
     echo '<div class="column">';
-    echo '<img class="thumbs cursor" src="uploads/slideshow/'.$row["imageName"].'" style="width:100%" onclick="currentSlide('.$count.')" alt="'.BBCodeParser::toHtml($row["caption"]).'">';
+    echo '<img class="thumbs cursor" src="uploads/slideshow/'.$row["imageName"].'" style="width:100%;" onclick="currentSlide('.$count.')" alt="'.BBCodeParser::toHtml($row["caption"]).'">';
     echo '<div class="slideAuthor" id="'.$row["author"].'"></div>';
     echo '</div>';
     
