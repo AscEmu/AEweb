@@ -239,11 +239,35 @@ class WebDB extends Database
         return $result;
     }
     
+    function getAmountOfTopicsInCategory($category_id)
+    {
+        $query = "SELECT COUNT(*) FROM board_topics WHERE category_id = '$category_id'";
+        $result = mysqli_query($this->connection, $query);
+        $results = mysqli_fetch_array($result);        
+        return $results[0];
+    }
+    
     function getLatestTopicInCategory($category_id)
     {
         $query = "SELECT id, subject, date, category_id, user_id FROM board_topics WHERE category_id = '$category_id' ORDER BY date DESC LIMIT 1";
         $result = mysqli_query($this->connection, $query);
         $results = mysqli_fetch_assoc($result);
         return $results;
+    }
+    
+    function getLatestPostInTopic($topic_id)
+    {
+        $query = "SELECT user_id, date FROM board_posts WHERE topic_id = '$topic_id' ORDER BY date DESC LIMIT 1";
+        $result = mysqli_query($this->connection, $query);
+        $results = mysqli_fetch_assoc($result);
+        return $results;
+    }
+    
+    function getAmountOfPostsInTopic($topic_id)
+    {
+        $query = "SELECT COUNT(*) FROM board_posts WHERE topic_id = '$topic_id'";
+        $result = mysqli_query($this->connection, $query);
+        $results = mysqli_fetch_array($result);        
+        return $results[0];
     }
 }

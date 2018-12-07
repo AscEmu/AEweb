@@ -137,22 +137,39 @@ Breadcrumbs
         
         // subCategories
         $subCategories = [];
-        
         $subCatQuery = $webDB->getSubCategoriesInCategory($row["id"]);
-    
         while($subCat = $subCatQuery->fetch_array())
         {
             $subCategories[] = $subCat;
         }
-        
+
         foreach($subCategories as $subCat)
         {
             if ($subCat["type"] != 2)
             {
+                // get topics in subcategory
+                $topicsInSubCategory = [];
+                $subTopicsQuery = $webDB->getTopicsInCategory($subCat["id"]);
+                while($subTopics = $subTopicsQuery->fetch_array())
+                {
+                    $topicsInSubCategory[] = $subTopics;
+                }
+                
+                $postsInSubTopics = 0;
+                foreach($topicsInSubCategory as $subTopics)
+                {
+                   $postsInSubTopics = $postsInSubTopics + $webDB->getAmountOfPostsInTopic($subTopics["id"]);
+                }
+                
+                //echo $postsInSubTopics;
+                
                 //get latest topic if available
                 $latestTopic = $webDB->getLatestTopicInCategory($subCat["id"]);
                 if ($latestTopic)
                 {
+                    $latestPost = $webDB->getLatestPostInTopic($latestTopic["id"]);
+                    
+                    $topicCount = $webDB->getAmountOfTopicsInCategory($subCat["id"]);
                     echo '  <div class="flex-container">
                                 <div class="box icon"><i class="fas fa-list"></i></div>
                                 <div class="box subcat">
@@ -160,12 +177,12 @@ Breadcrumbs
                                     <p>'.$subCat["description"].'</p>
                                 </div>
                                 <div class="box stats">
-                                    <p class="stat">Topics 46</p>
-                                    <p class="stat">Posts 140</p>
+                                    <p class="stat">Topics '.$topicCount.'</p>
+                                    <p class="stat">Posts '.$postsInSubTopics.'</p>
                                 </div>
                                 <div class="box latest">
                                     <p class="link-text">'.$latestTopic["subject"].'</p>
-                                    <p class="info">'.$webDB->getUserNameForId($latestTopic["user_id"]).', '.$latestTopic["date"].'</p>
+                                    <p class="info">'.$webDB->getUserNameForId($latestPost["user_id"]).', '.$latestPost["date"].'</p>
                                 </div>
                             </div>';
                 }
@@ -203,27 +220,6 @@ Breadcrumbs
         {
             if ($subCat["type"] == 2)
             {
-                //get latest topic if available
-                $latestTopic = $webDB->getLatestTopicInCategory($subCat["id"]);
-                if ($latestTopic)
-                {
-                    echo '  <div class="flex-container">
-                                <div class="box icon"><i class="fas fa-list"></i></div>
-                                <div class="box subcat">
-                                    <p class="title">'.$subCat["name"].'</p>
-                                    <p>'.$subCat["description"].'</p>
-                                </div>
-                                <div class="box stats">
-                                    <p class="stat">Topics 46</p>
-                                    <p class="stat">Posts 140</p>
-                                </div>
-                                <div class="box latest">
-                                    <p class="link-text">'.$latestTopic["subject"].'</p>
-                                    <p class="info">'.$webDB->getUserNameForId($latestTopic["user_id"]).', '.$latestTopic["date"].'</p>
-                                </div>
-                            </div>';
-                }
-                else
                 {
                     echo '  <div class="flex-container">
                                 <div class="box icon"><i class="fas fa-link"></i></div>
@@ -232,7 +228,7 @@ Breadcrumbs
                                     <p>Download here!</p>
                                 </div>
                                 <div class="box clicks">
-                                    <p class="stats-single">Clicks 1522</p>
+                                    <!--<p class="stats-single">Clicks 1522</p>-->
                                 </div>
                             </div>';
                 }
@@ -258,7 +254,7 @@ Breadcrumbs
                             <p>With the latest patch blizz tries to....</p>
                         </div>
                         <div class="box stats">
-                            <p class="stats-single">Posts 5</p>
+                            <p class="stats-single">Posts '.$webDB->getAmountOfPostsInTopic($topic["id"]).'</p>
                         </div>
                         <div class="box latest">
                             <p class="link-text">Latest comment by '.$webDB->getUserNameForId($topic["user_id"]).'</p>
@@ -270,6 +266,7 @@ Breadcrumbs
 ?>
 </div>
 <div class="col-lg-3">
-<h2>Sidebar</h2>
-<hr><br>
+    <h2>Sidebar</h2>
+    <p>Latest Topics</p>
+    <p>Latest Posts</p>
 </div>
