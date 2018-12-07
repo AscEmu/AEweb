@@ -1,6 +1,12 @@
 
 <?php include 'content/head.tmp.php'; ?>
 
+<?php include 'modules/forum/config.php'; ?>
+<?php include 'modules/forum/class.php'; ?>
+
+<?php
+$forumDB = new ForumDB();
+?>
 
 <div class="container">
     <div class="row">
@@ -19,10 +25,12 @@ if (isset($_POST['createCategory']))
     
     if ($type == 0)
         $parentId = $_POST['parentIdForCategory'];
-    else
+    else if ($type == 1)
         $parentId = $_POST['parentIdForForum'];
+    else
+        $parentId = $_POST['parentIdForLink'];
     
-    $categoryQuery = $webDB->addCategory($parentId, $title, $text, $type);
+    $categoryQuery = $forumDB->addCategory($parentId, $title, $text, $type);
     if (!$categoryQuery)
     {
         echo '<div class="alert alert-danger alert-dismissible">
@@ -44,7 +52,7 @@ if (isset($_POST['openEditForm']))
 {
     $categoryId = $_POST['id'];
     
-    $categoryQuery = $webDB->getCategoryById($categoryId);
+    $categoryQuery = $forumDB->getCategoryById($categoryId);
     if (!$categoryQuery)
     {
         echo '<div class="alert alert-danger alert-dismissible">
@@ -78,10 +86,12 @@ if (isset($_POST['editCategory']))
     
     if ($type == 0)
         $parentId = $_POST['parentIdForCategoryC'];
-    else
+    else if ($type == 1)
         $parentId = $_POST['parentIdForForumC'];
+    else if ($type == 2)
+        $parentId = $_POST['parentIdForLinkC'];
     
-    $categoryQuery = $webDB->updateCategory($parentId, $title, $text, $type, $id);
+    $categoryQuery = $forumDB->updateCategory($parentId, $title, $text, $type, $id);
     if (!$categoryQuery)
     {
         echo '<div class="alert alert-danger alert-dismissible">
@@ -103,7 +113,7 @@ if (isset($_POST['deleteCategory']))
 {
     $categoryId = $_POST['id'];
     
-    $categoryQuery = $webDB->deleteCategoryById($categoryId);
+    $categoryQuery = $forumDB->deleteCategoryById($categoryId);
     if (!$categoryQuery)
     {
         echo '<div class="alert alert-danger alert-dismissible">
@@ -122,24 +132,31 @@ if (isset($_POST['deleteCategory']))
 
 // get Category from db
 $rows = [];
-$categories = $webDB->getCategories();
+$categories = $forumDB->getAllCategoryTypes();
 while($row = $categories->fetch_array())
 {
    $rows[] = $row;
 }
 
 // get available Categories for subcategory
-$parentCategories = $webDB->getAvailableCategoriesForSubCategory();
+$parentCategories = $forumDB->getAvailableCategoriesForSubCategory();
 while($row = $parentCategories->fetch_array())
 {
    $categoryRows[] = $row;
 }
 
 // get available Categories for forums
-$parentCategoriesForum = $webDB->getAvailableCategoriesForForum();
+$parentCategoriesForum = $forumDB->getAvailableCategoriesForForum();
 while($row = $parentCategoriesForum->fetch_array())
 {
    $forumCategoryRows[] = $row;
+}
+
+// get available Categories/Forums for link
+$parentCategoriesLinks = $forumDB->getAvailableCategoriesForLinks();
+while($row = $parentCategoriesLinks->fetch_array())
+{
+   $linkCategoryRows[] = $row;
 }
 
 ?>
@@ -162,6 +179,10 @@ while($row = $parentCategoriesForum->fetch_array())
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" class="custom-control-input" id="_forumC" name="typeCC" value="1" disabled <?php echo isset($ChangeRows["type"]) ? $ChangeRows["type"] == 1 ? "checked" : "" : ""; ?>>
                         <label class="custom-control-label" for="_forumC">Forum</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="_linkC" name="typeCC" value="2" disabled <?php echo isset($ChangeRows["type"]) ? $ChangeRows["type"] == 2 ? "checked" : "" : ""; ?>>
+                        <label class="custom-control-label" for="_linkC">Link</label>
                     </div>
                     <br><br>
                     <!-- parent list -->
@@ -190,7 +211,7 @@ while($row = $parentCategoriesForum->fetch_array())
                             </div>
                     <?php 
                         }
-                        else
+                        else if (isset($ChangeRows["type"]) && $ChangeRows["type"] == 1)
                         {
                     ?>
                             <div class="form-group" id="_forForumC">
@@ -200,6 +221,29 @@ while($row = $parentCategoriesForum->fetch_array())
                                         foreach($forumCategoryRows as $row)
                                         {
                                             if (isset($ChangeRows["parentId"]) && $ChangeRows["parentId"] != 0 && $ChangeRows["parentId"] == $row["id"])
+                                            {
+                                                echo '<option value="'.$row["id"].'" selected>'.$row["name"].'</option>';
+                                            }
+                                            else
+                                            {
+                                                echo '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                                            }
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                    <?php 
+                        }
+                        else if (isset($ChangeRows["type"]) && $ChangeRows["type"] == 2)
+                        {
+                    ?>
+                            <div class="form-group" id="_forLinkC">
+                                <label for="parentLinkC">Select parent category for forum</label>
+                                <select class="form-control" name="parentIdForLinkC" id="parentLinkC">
+                                    <?php
+                                        foreach($linkCategoryRows as $row)
+                                        {
+                                            if (isset($ChangeRows["parentId"]) && $ChangeRows["parentId"] != 2 && $ChangeRows["parentId"] == $row["id"])
                                             {
                                                 echo '<option value="'.$row["id"].'" selected>'.$row["name"].'</option>';
                                             }
@@ -267,8 +311,10 @@ while($row = $parentCategoriesForum->fetch_array())
                                         echo     '<td>'.$row["description"].'</td>';
                                         if ($row["type"] == 0)
                                             echo     '<td>category</td>';
-                                        else
+                                        else if ($row["type"] == 1)
                                             echo     '<td>forum</td>';
+                                        else
+                                            echo     '<td>link</td>';
                                         echo     '<td>';
                                         echo     '<form method="post" action="/admin/forum-categories" autocomplete="off">
                                                     <input type="hidden" name="id" value="'.$row["id"].'">
@@ -320,10 +366,14 @@ while($row = $parentCategoriesForum->fetch_array())
                         <input type="radio" class="custom-control-input" id="_forum" name="type" value="1" checked>
                         <label class="custom-control-label" for="_forum">Forum</label>
                     </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" id="_link" name="type" value="2">
+                        <label class="custom-control-label" for="_link">Link</label>
+                    </div>
                     <br><br>
                     <!-- parent list -->
                     <div class="form-group" id="_forCategory">
-                        <label for="parentCat">Select parent category for category</label>
+                        <label for="parentCat">Select parent category for subcategory</label>
                         <select class="form-control" name="parentIdForCategory" id="parentCat">
                             <?php
                                 echo '<option value="0"></option>';
@@ -339,6 +389,17 @@ while($row = $parentCategoriesForum->fetch_array())
                         <select class="form-control" name="parentIdForForum" id="parentForum">
                             <?php
                                 foreach($forumCategoryRows as $row)
+                                {
+                                    echo '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group" id="_forLink">
+                        <label for="parentLink">Select parent category for link</label>
+                        <select class="form-control" name="parentIdForLink" id="parentLink">
+                            <?php
+                                foreach($linkCategoryRows as $row)
                                 {
                                     echo '<option value="'.$row["id"].'">'.$row["name"].'</option>';
                                 }
@@ -382,9 +443,11 @@ instance.insert('<?php echo isset($ChangeRows["description"]) ? html_entity_deco
 var radios = document.getElementsByName("type");
 var forCat =  document.getElementById("_forCategory");
 var forForum =  document.getElementById("_forForum");
+var forLink =  document.getElementById("_forLink");
 
 forCat.style.display = 'none';
 forForum.style.display = 'block';
+forLink.style.display = 'none';
 
 for(var i = 0; i < radios.length; i++) {
     radios[i].onclick = function() {
@@ -392,11 +455,18 @@ for(var i = 0; i < radios.length; i++) {
         if(val == '0'){
             forCat.style.display = 'block';
             forForum.style.display = 'none';
+            forLink.style.display = 'none';
         }
         else if(val == '1'){
              forCat.style.display = 'none';
              forForum.style.display = 'block';
-        }    
+             forLink.style.display = 'none';
+        }
+        else {
+             forCat.style.display = 'none';
+             forForum.style.display = 'none';
+             forLink.style.display = 'block';
+        }        
             
     }
 }

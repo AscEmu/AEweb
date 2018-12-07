@@ -1,6 +1,10 @@
 <?php include 'config.php'; ?>
 <?php include 'class.php'; ?>
 
+<?php
+$forumDB = new ForumDB();
+?>
+
 <style>
 .main-category{
  width: 100%;
@@ -112,6 +116,19 @@ p.info {
     font-size: 0.8em;
     margin-bottom: 0.7em;
 }
+
+p.links {
+    margin:0;
+    padding:0.8em 0 0 0;
+    font-weight: 700;
+}
+
+p.links a{
+    margin:0;
+    padding:0;
+    text-decoration: none;
+    color: #fff;
+}
 </style>
 
 <div class="col-lg-12">
@@ -123,7 +140,7 @@ Breadcrumbs
 <h2>Forum</h2>
 
 <?php
-    $boardCategories = $webDB->getCategories();
+    $boardCategories = $forumDB->getCategories();
     
     while($row = $boardCategories->fetch_array())
     {
@@ -137,7 +154,7 @@ Breadcrumbs
         
         // subCategories
         $subCategories = [];
-        $subCatQuery = $webDB->getSubCategoriesInCategory($row["id"]);
+        $subCatQuery = $forumDB->getSubCategoriesInCategory($row["id"]);
         while($subCat = $subCatQuery->fetch_array())
         {
             $subCategories[] = $subCat;
@@ -149,7 +166,7 @@ Breadcrumbs
             {
                 // get topics in subcategory
                 $topicsInSubCategory = [];
-                $subTopicsQuery = $webDB->getTopicsInCategory($subCat["id"]);
+                $subTopicsQuery = $forumDB->getTopicsInCategory($subCat["id"]);
                 while($subTopics = $subTopicsQuery->fetch_array())
                 {
                     $topicsInSubCategory[] = $subTopics;
@@ -158,18 +175,18 @@ Breadcrumbs
                 $postsInSubTopics = 0;
                 foreach($topicsInSubCategory as $subTopics)
                 {
-                   $postsInSubTopics = $postsInSubTopics + $webDB->getAmountOfPostsInTopic($subTopics["id"]);
+                   $postsInSubTopics = $postsInSubTopics + $forumDB->getAmountOfPostsInTopic($subTopics["id"]);
                 }
                 
                 //echo $postsInSubTopics;
                 
                 //get latest topic if available
-                $latestTopic = $webDB->getLatestTopicInCategory($subCat["id"]);
+                $latestTopic = $forumDB->getLatestTopicInCategory($subCat["id"]);
                 if ($latestTopic)
                 {
-                    $latestPost = $webDB->getLatestPostInTopic($latestTopic["id"]);
+                    $latestPost = $forumDB->getLatestPostInTopic($latestTopic["id"]);
                     
-                    $topicCount = $webDB->getAmountOfTopicsInCategory($subCat["id"]);
+                    $topicCount = $forumDB->getAmountOfTopicsInCategory($subCat["id"]);
                     echo '  <div class="flex-container">
                                 <div class="box icon"><i class="fas fa-list"></i></div>
                                 <div class="box subcat">
@@ -210,7 +227,7 @@ Breadcrumbs
         // links
         $subCategories = [];
         
-        $subCatQuery = $webDB->getSubCategoriesInCategory($row["id"]);
+        $subCatQuery = $forumDB->getSubCategoriesInCategory($row["id"]);
         while($subCat = $subCatQuery->fetch_array())
         {
             $subCategories[] = $subCat;
@@ -224,8 +241,7 @@ Breadcrumbs
                     echo '  <div class="flex-container">
                                 <div class="box icon"><i class="fas fa-link"></i></div>
                                 <div class="box link">
-                                    <p class="title">'.$subCat["name"].'</p>
-                                    <p>Download here!</p>
+                                    <p class="links"><a href="'.$subCat["description"].'">'.$subCat["name"].'</a></p>
                                 </div>
                                 <div class="box clicks">
                                     <!--<p class="stats-single">Clicks 1522</p>-->
@@ -238,7 +254,7 @@ Breadcrumbs
         // topics
         $topics = [];
         
-        $categoryTopics = $webDB->getTopicsInCategory($row["id"]);
+        $categoryTopics = $forumDB->getTopicsInCategory($row["id"]);
     
         while($topic = $categoryTopics->fetch_array())
         {
@@ -247,14 +263,16 @@ Breadcrumbs
         
         foreach($topics as $topic)
         {
+            $firstPost = $forumDB->getFirstPostInTopic($topic["id"]);
+            $resultPost = mb_substr($firstPost["content"], 0, 30);
             echo '  <div class="flex-container">
                         <div class="box icon"><i class="far fa-comments"></i></div>
                         <div class="box subcat">
                             <p class="title">'.$topic["subject"].'</p>
-                            <p>With the latest patch blizz tries to....</p>
+                            <p>'.$resultPost.'...</p>
                         </div>
                         <div class="box stats">
-                            <p class="stats-single">Posts '.$webDB->getAmountOfPostsInTopic($topic["id"]).'</p>
+                            <p class="stats-single">Posts '.$forumDB->getAmountOfPostsInTopic($topic["id"]).'</p>
                         </div>
                         <div class="box latest">
                             <p class="link-text">Latest comment by '.$webDB->getUserNameForId($topic["user_id"]).'</p>
