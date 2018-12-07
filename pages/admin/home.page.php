@@ -23,6 +23,7 @@
                 <a href="/admin/news" class="btn btn-dark btn-lg" role="button"><i class="far fa-newspaper"></i> News Management</a>
                 <a href="/admin/slideshow" class="btn btn-dark btn-lg" role="button"><i class="far fa-images"></i> Manage Slideshow</a>
                 <a href="/admin/realms" class="btn btn-dark btn-lg" role="button"><i class="fas fa-server"></i> Realm Servers</a>
+                <a href="/admin/forum-categories" class="btn btn-dark btn-lg" role="button"><i class="fas fa-clipboard-list"></i> Forum Categories</a>
             </div>
         </div>
     </div>

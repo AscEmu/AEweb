@@ -184,6 +184,33 @@ class WebDB extends Database
         return $result;
     }
     
+    function addCategory($name, $description)
+    {
+        $title = $this->escapeString($name);
+        $text = htmlspecialchars($description);
+        $query = "INSERT INTO board_categories(name, description) VALUES('$title', '$text')";
+        return mysqli_query($this->connection, $query);
+    }
+    
+    function updateCategory($name, $description, $id)
+    {
+        $textForm = htmlspecialchars($description);
+        $query = "REPLACE INTO board_categories(id, name, description) VALUES($id, '$name', '$textForm')";
+        return mysqli_query($this->connection, $query);
+    }
+    
+    function deleteCategoryById($id)
+    {
+        $query = "DELETE FROM board_categories WHERE id = '$id'";
+        return mysqli_query($this->connection, $query);
+    }
+    
+    function getCategoryById($id)
+    {
+        $query = "SELECT id, name, description FROM board_categories WHERE id = '$id'";
+        return mysqli_query($this->connection, $query);
+    }
+    
     function getTopicsInCategory($category_id)
     {
         $query = "SELECT id, subject, date, category_id, user_id FROM board_topics WHERE category_id = '$category_id' ORDER BY date ASC";
