@@ -1,0 +1,3 @@
+ALTER TABLE `board_categories`
+ADD COLUMN `parentId` INT(8) NOT NULL DEFAULT 0 AFTER `id`,
+ADD COLUMN `type` TINYINT(1) NOT NULL DEFAULT 1 AFTER `description`;

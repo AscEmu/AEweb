@@ -20,8 +20,29 @@
     {
         echo '<h3>'.$row["name"].'</h3>';
         echo '<p>'.$row["description"].'</p>';
-
         
+        // subCategories
+        $subCategories = [];
+        
+        $subCatQuery = $webDB->getSubCategoriesInCategory($row["id"]);
+    
+        while($subCat = $subCatQuery->fetch_array())
+        {
+            $subCategories[] = $subCat;
+        }
+        
+        foreach($subCategories as $subCat)
+        {
+            //get latest topic if available
+            $latestTopic = $webDB->getLatestTopicInCategory($subCat["id"]);
+            if ($latestTopic)
+                echo '<b>'.$subCat["name"].'</b> - '.$latestTopic["subject"].' by: '.$webDB->getUserNameForId($latestTopic["user_id"]).' date: '.$latestTopic["date"].'<br>';
+            else
+                echo '<b>'.$subCat["name"].'</b><br>';
+                
+        }
+
+        // topics
         $topics = [];
         
         $categoryTopics = $webDB->getTopicsInCategory($row["id"]);

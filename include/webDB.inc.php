@@ -179,23 +179,37 @@ class WebDB extends Database
     // forums
     function getCategories()
     {
-        $query = "SELECT id, name, description FROM board_categories ORDER BY id ASC";
+        $query = "SELECT id, parentId, name, description, type FROM board_categories WHERE type = 0 ORDER BY id ASC";
         $result = mysqli_query($this->connection, $query);			
         return $result;
     }
     
-    function addCategory($name, $description)
+    function getAvailableCategoriesForSubCategory()
+    {
+        $query = "SELECT id, name FROM board_categories WHERE parentId = 0 AND type = 0 ORDER BY name ASC";
+        $result = mysqli_query($this->connection, $query);			
+        return $result;
+    }
+    
+    function getAvailableCategoriesForForum()
+    {
+        $query = "SELECT id, name FROM board_categories WHERE type = 0 ORDER BY name ASC";
+        $result = mysqli_query($this->connection, $query);			
+        return $result;
+    }
+    
+    function addCategory($parentId, $name, $description, $type)
     {
         $title = $this->escapeString($name);
         $text = htmlspecialchars($description);
-        $query = "INSERT INTO board_categories(name, description) VALUES('$title', '$text')";
+        $query = "INSERT INTO board_categories(parentId, name, description, type) VALUES($parentId, '$title', '$text', $type)";
         return mysqli_query($this->connection, $query);
     }
     
-    function updateCategory($name, $description, $id)
+    function updateCategory($parentId, $name, $description, $type, $id)
     {
         $textForm = htmlspecialchars($description);
-        $query = "REPLACE INTO board_categories(id, name, description) VALUES($id, '$name', '$textForm')";
+        $query = "REPLACE INTO board_categories(id, parentId, name, description, type) VALUES($id, $parentId, '$name', '$textForm', $type)";
         return mysqli_query($this->connection, $query);
     }
     
@@ -207,14 +221,29 @@ class WebDB extends Database
     
     function getCategoryById($id)
     {
-        $query = "SELECT id, name, description FROM board_categories WHERE id = '$id'";
+        $query = "SELECT id, parentId, name, description, type FROM board_categories WHERE id = '$id'";
         return mysqli_query($this->connection, $query);
+    }
+    
+    function getSubCategoriesInCategory($category_id)
+    {
+        $query = "SELECT id, parentId, name, description FROM board_categories WHERE parentId = '$category_id' ORDER BY id ASC";
+        $result = mysqli_query($this->connection, $query);			
+        return $result;
     }
     
     function getTopicsInCategory($category_id)
     {
-        $query = "SELECT id, subject, date, category_id, user_id FROM board_topics WHERE category_id = '$category_id' ORDER BY date ASC";
+        $query = "SELECT id, subject, date, category_id, user_id FROM board_topics WHERE category_id = '$category_id' ORDER BY date DESC";
         $result = mysqli_query($this->connection, $query);			
         return $result;
+    }
+    
+    function getLatestTopicInCategory($category_id)
+    {
+        $query = "SELECT id, subject, date, category_id, user_id FROM board_topics WHERE category_id = '$category_id' ORDER BY date DESC LIMIT 1";
+        $result = mysqli_query($this->connection, $query);
+        $results = mysqli_fetch_assoc($result);
+        return $results;
     }
 }
