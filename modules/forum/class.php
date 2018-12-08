@@ -124,6 +124,43 @@ class ForumDB extends Database
         $results = mysqli_fetch_array($result);        
         return $results[0];
     }
+    
+    //Latest Posts
+    function getLatestPosts()
+    {
+        $query = "SELECT id, content, date, topic_id, user_id FROM board_posts ORDER BY date DESC LIMIT 5";
+        $result = mysqli_query($this->connection, $query);        
+        return $result;
+    }
+    
+    function getTopicById($topic_id)
+    {
+        $query = "SELECT id, subject, date, category_id, user_id FROM board_topics WHERE id = '$topic_id'";
+        $result = mysqli_query($this->connection, $query);	
+        $results = mysqli_fetch_assoc($result);		
+        return $results;
+    }
+}
+
+class LatestPosts
+{
+    public $postsArray = [];
+    
+    public function __construct()
+    {
+        $ForumDB = new ForumDB();
+        
+        $postDb = $ForumDB->getLatestPosts();
+        while($post = $postDb->fetch_array())
+        {
+            $this->postsArray[] = $post;
+        }
+    }
+    
+    function getLatestPosts()
+    {       
+        return $this->postsArray;
+    }
 }
 
 ?>

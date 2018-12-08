@@ -129,6 +129,22 @@ p.links a{
     text-decoration: none;
     color: #fff;
 }
+
+p.latest-title {
+    font-size: 0.8em;
+    font-weight: 700;
+    margin:0;
+    padding:0;
+    text-align: right;
+}
+
+p.latest {
+    margin:0;
+    padding:0;
+    font-size: 0.8em;
+    margin-bottom: 0.7em;
+    text-align: right;
+}
 </style>
 
 <div class="col-lg-12">
@@ -283,8 +299,23 @@ Breadcrumbs
     }
 ?>
 </div>
+
+<!--sidebar-->
 <div class="col-lg-3">
+<?php
+$latestPosts = new LatestPosts();
+?>
     <h2>Sidebar</h2>
     <p>Latest Topics</p>
+    
     <p>Latest Posts</p>
+    <?php
+        foreach($latestPosts->getLatestPosts() as $posts)
+        {
+            $topicInfo = $forumDB->getTopicById($posts["topic_id"]);
+            
+            echo '<p class="latest-title">In topic: '.$topicInfo["subject"].'</p>';
+            echo '<p class="latest">by '.$webDB->getUserNameForId($posts["user_id"]).', '.$posts["date"].'</p>';
+        }
+    ?>
 </div>
