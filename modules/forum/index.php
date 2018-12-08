@@ -229,7 +229,7 @@ echo '<a href="'.Config\Hosting::baseURL.'forum/home">Forum</a>';
                                 <div class="box icon"><i class="fas fa-list"></i></div>
                                 <div class="box subcat">
                                     <p class="title"><a href="'.Config\Hosting::baseURL.'forum/category/'.$subCat["id"].'-'.$subCat["name"].'">'.$subCat["name"].'</a></p>
-                                    <p>'.$subCat["description"].'</p>
+                                    <p class="info">'.$subCat["description"].'</p>
                                 </div>
                                 <div class="box stats">
                                     <p class="stat">Topics '.$topicCount.'</p>
@@ -247,7 +247,7 @@ echo '<a href="'.Config\Hosting::baseURL.'forum/home">Forum</a>';
                                 <div class="box icon"><i class="fas fa-list"></i></div>
                                 <div class="box subcat">
                                     <p class="title"><a href="'.Config\Hosting::baseURL.'forum/category/'.$subCat["id"].'-'.$subCat["name"].'">'.$subCat["name"].'</a></p>
-                                    <p>'.$subCat["description"].'</p>
+                                    <p class="info">'.$subCat["description"].'</p>
                                 </div>
                                 <div class="box stats">
                                     <p class="stat">Topics 0</p>
@@ -302,12 +302,11 @@ echo '<a href="'.Config\Hosting::baseURL.'forum/home">Forum</a>';
         foreach($topics as $topic)
         {
             $firstPost = $forumDB->getFirstPostInTopic($topic["id"]);
-            $resultPost = mb_substr($firstPost["content"], 0, 30);
             echo '  <div class="flex-container">
                         <div class="box icon"><i class="far fa-comments"></i></div>
                         <div class="box subcat">
-                            <p class="title">'.$topic["subject"].'</p>
-                            <p>'.$resultPost.'...</p>
+                            <p class="title"><a href="'.Config\Hosting::baseURL.'forum/topic/'.$topic["id"].'-'.$topic["subject"].'">'.$topic["subject"].'</a></p>
+                            <p class="info">Started by '.$webDB->getUserNameForId($firstPost["user_id"]).', '.$firstPost["date"].'</p>
                         </div>
                         <div class="box stats">
                             <p class="stats-single">Posts '.$forumDB->getAmountOfPostsInTopic($topic["id"]).'</p>

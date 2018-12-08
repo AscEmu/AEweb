@@ -70,6 +70,13 @@ class ForumDB extends Database
         $query = "SELECT id, parentId, name, description, type FROM board_categories WHERE id = '$id'";
         return mysqli_query($this->connection, $query);
     }
+    function getCategoryDataById($id)
+    {
+        $query = "SELECT id, parentId, name, description, type FROM board_categories WHERE id = '$id'";
+        $result = mysqli_query($this->connection, $query);
+        $results = mysqli_fetch_assoc($result);
+        return $results;
+    }
     
     function getCategoryNameForId($id)
     {
@@ -117,9 +124,25 @@ class ForumDB extends Database
         return $results;
     }
     
+    function getTopicNameForId($id)
+    {
+        $query = "SELECT subject FROM board_topics WHERE id = '$id'";
+        $result = mysqli_query($this->connection, $query);
+        $results = mysqli_fetch_assoc($result);
+        return $results["subject"];
+    }
+    
+    function getCategoryForTopicId($id)
+    {
+        $query = "SELECT category_id FROM board_topics WHERE id = '$id'";
+        $result = mysqli_query($this->connection, $query);
+        $results = mysqli_fetch_assoc($result);
+        return $results["category_id"];
+    }
+    
     function getFirstPostInTopic($topic_id)
     {
-        $query = "SELECT content FROM board_posts WHERE topic_id = '$topic_id' ORDER BY date ASC LIMIT 1";
+        $query = "SELECT id, content, date, user_id FROM board_posts WHERE topic_id = '$topic_id' ORDER BY date ASC LIMIT 1";
         $result = mysqli_query($this->connection, $query);
         $results = mysqli_fetch_assoc($result);
         return $results;
@@ -139,6 +162,13 @@ class ForumDB extends Database
         $result = mysqli_query($this->connection, $query);
         $results = mysqli_fetch_array($result);        
         return $results[0];
+    }
+    
+    function getPostsInTopic($topic_id)
+    {
+        $query = "SELECT id, content, date, user_id FROM board_posts WHERE topic_id = '$topic_id' ORDER BY date ASC";
+        $result = mysqli_query($this->connection, $query);
+        return $result;
     }
     
     //Latest Posts
