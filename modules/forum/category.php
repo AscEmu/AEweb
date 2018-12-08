@@ -3,6 +3,20 @@
 
 <?php
 $forumDB = new ForumDB();
+
+// create category array
+$linkCategory = $_GET['category'];
+
+// explode
+$linkArray = explode("-", $linkCategory, 2);
+
+// fill in named array
+$linkInfo = array(
+    "raw"=>$linkCategory,
+    "id"=>$linkArray[0],
+    "name"=>$linkArray[1],
+    "parent"=>$forumDB->getParentCategoryForId($linkArray[0])
+);
 ?>
 
 <style>
@@ -159,26 +173,32 @@ p.latest {
     margin-bottom: 0.7em;
     text-align: right;
 }
-
-.main-category h4 a {
-    color: #fff;
-    text-decoration: none;
-}
-.main-category h4 a:hover {
-    color: #fff;
-    text-decoration: none;
-}
 </style>
 
+<!--Breadcrumbs for Categories-->
 <div class="col-lg-12">
 <?php
 echo '<a href="'.Config\Hosting::baseURL.'forum/home">Forum</a>';
+
+// get current name
+$linkInfoName = $forumDB->getCategoryNameForId($linkInfo["id"]);
+// has parent category
+if ($linkInfo["parent"] != 0)
+{
+    $bcParentCategoryName = $forumDB->getCategoryNameForId($linkInfo["parent"]);
+    echo ' / ';
+    echo '<a href="'.Config\Hosting::baseURL.'forum/category/'.$linkInfo["parent"].'-'.$bcParentCategoryName.'">'.$bcParentCategoryName.'</a>';
+}
+
+echo ' / ';
+echo '<a href="'.Config\Hosting::baseURL.'forum/category/'.$linkInfo["id"].'-'.$linkInfoName.'">'.$linkInfoName.'</a>';
 ?>
 </div>
 
 <div class="col-lg-9">
+
 <?php
-    $boardCategories = $forumDB->getCategories();
+    /*$boardCategories = $forumDB->getCategories();
     
     while($row = $boardCategories->fetch_array())
     {
@@ -186,13 +206,13 @@ echo '<a href="'.Config\Hosting::baseURL.'forum/home">Forum</a>';
     }
     
     foreach($rows as $row)
-    {
-        echo '<div class="main-category"><h4><a href="'.Config\Hosting::baseURL.'forum/category/'.$row["id"].'-'.$row["name"].'">'.$row["name"].'</h4></a></div>';
+    {*/
+        echo '<div class="main-category"><h4>'.$linkInfoName.'</h4></div>';
         //echo '<p>'.$row["description"].'</p>';
         
         // subCategories
         $subCategories = [];
-        $subCatQuery = $forumDB->getSubCategoriesInCategory($row["id"]);
+        $subCatQuery = $forumDB->getSubCategoriesInCategory($linkInfo["id"]);
         while($subCat = $subCatQuery->fetch_array())
         {
             $subCategories[] = $subCat;
@@ -265,7 +285,7 @@ echo '<a href="'.Config\Hosting::baseURL.'forum/home">Forum</a>';
         // links
         $subCategories = [];
         
-        $subCatQuery = $forumDB->getSubCategoriesInCategory($row["id"]);
+        $subCatQuery = $forumDB->getSubCategoriesInCategory($linkInfo["id"]);
         while($subCat = $subCatQuery->fetch_array())
         {
             $subCategories[] = $subCat;
@@ -292,7 +312,7 @@ echo '<a href="'.Config\Hosting::baseURL.'forum/home">Forum</a>';
         // topics
         $topics = [];
         
-        $categoryTopics = $forumDB->getTopicsInCategory($row["id"]);
+        $categoryTopics = $forumDB->getTopicsInCategory($linkInfo["id"]);
     
         while($topic = $categoryTopics->fetch_array())
         {
@@ -318,7 +338,7 @@ echo '<a href="'.Config\Hosting::baseURL.'forum/home">Forum</a>';
                         </div>
                     </div>';
         }
-    }
+    //}
 ?>
 </div>
 

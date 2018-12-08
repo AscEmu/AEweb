@@ -1,3 +1,7 @@
 RewriteEngine on
 RewriteRule ^([^/\.]+)/?$ index.php?page=$1 [L]
 RewriteRule ^([^/\.]+)/([^/\.]+)$ index.php?dir=$1&page=$2 [L]
+
+#forum categories first level
+RewriteCond %{REQUEST_URI} !\.(jpg|jpeg|gif|png|xml|txt)$
+RewriteRule ^([^/\.]+)/([^/\.]+)/([^/]+)$ index.php?dir=$1&page=$2&category=$3 [L]

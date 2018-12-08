@@ -18,7 +18,7 @@
                 <a class="nav-link" href="/test2">Test2</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/forum">Forum</a>
+                <a class="nav-link" href="/forum/home">Forum</a>
               </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" method="post" action="/search">

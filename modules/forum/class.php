@@ -71,6 +71,22 @@ class ForumDB extends Database
         return mysqli_query($this->connection, $query);
     }
     
+    function getCategoryNameForId($id)
+    {
+        $query = "SELECT name FROM board_categories WHERE id = '$id'";
+        $result = mysqli_query($this->connection, $query);
+        $results = mysqli_fetch_assoc($result);
+        return $results["name"];
+    }
+    
+    function getParentCategoryForId($id)
+    {
+        $query = "SELECT parentId FROM board_categories WHERE id = '$id'";
+        $result = mysqli_query($this->connection, $query);
+        $results = mysqli_fetch_assoc($result);
+        return $results["parentId"];
+    }
+    
     function getSubCategoriesInCategory($category_id)
     {
         $query = "SELECT id, parentId, name, description, type FROM board_categories WHERE parentId = '$category_id' ORDER BY id ASC";
