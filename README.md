@@ -1,6 +1,8 @@
 # AEweb
 Welcome to AEweb. If you want to contribute, feel free to create an issue or pullrequest.
 
+![image](https://github.com/schnek/AEweb/assets/1216225/a68d2515-dc59-433b-9918-4ce386fe5175)
+
 ### Users
 - [x] Registration
 - [ ] E-Mail verification

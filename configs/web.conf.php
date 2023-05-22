@@ -13,7 +13,7 @@ namespace Config
     class Info
     {
         const siteName = "AE-Web";
-        const siteSlogan = "Made with love.";
+        const siteSlogan = "Made with love. ❤";
         const contactEMail = "info@ae-web.xyz";
         const foundedInYear = "2018";
     }
